@@ -4,11 +4,14 @@ import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
 import 'package:getx_stocks_pse/app/data/services/stocks_service.dart';
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class StocksController extends GetxController {
   //TODO: Implement StocksController
 
   // final count = 0.obs;
   List<Stocks> stockList = <Stocks>[].obs;
+  var isLoading = true.obs;
   final StocksService _stocksService = StocksService();
 
   @override
@@ -17,6 +20,8 @@ class StocksController extends GetxController {
     _getAllProducts();
     super.onInit();
   }
+
+  void _getCurrentDate() async {}
 
   @override
   void onReady() {
@@ -34,5 +39,9 @@ class StocksController extends GetxController {
     result["stocks"].forEach((data) {
       stockList.add(Stocks.fromJson(data));
     });
+    // this.isLoading = false;
+    isLoading(false);
+
+    // isLoading = false;
   }
 }
