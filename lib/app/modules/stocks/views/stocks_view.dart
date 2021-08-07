@@ -13,6 +13,37 @@ import '../controllers/stocks_controller.dart';
 class StocksView extends GetView<StocksController> {
   // Stock _stockService = StockService
 
+  // StocksController controller = Get.put(StocksController());
+
+  // Widget build(BuildContext context) {
+  //   return Obx(() => Scaffold(
+  //       appBar: AppBar(
+  //         title: Text(controller.isLoading.value.toString()),
+  //       ),
+  //       body: controller.isLoading.value
+  //           ? CircularProgressIndicator()
+  //           : GetBuilder<StocksController>(
+  //               builder: (controller) => ListView.builder(
+  //                   itemCount: controller.stockList.length,
+  //                   itemBuilder: (context, index) {
+  //                     return ListTile(
+  //                       title: Column(
+  //                         children: [
+  //                           Text(
+  //                               'Number: ${controller.stockList[index].companyName}'),
+  //                           ElevatedButton(
+  //                             onPressed: () {
+  //                               controller.stockList[index].companyName =
+  //                                   "changed";
+  //                               controller.update();
+  //                             },
+  //                             child: Text('fdf'),
+  //                           )
+  //                         ],
+  //                       ),
+  //                     );
+  //                   }))));
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +62,7 @@ class StocksView extends GetView<StocksController> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search_rounded),
         onPressed: () {
-          print('fdf');
+          // print('fdf');
         },
       ),
       body: SafeArea(
@@ -143,11 +174,79 @@ class StocksView extends GetView<StocksController> {
                                   borderRadius: BorderRadius.circular(30.0),
                                 ),
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: Scrollbar(
-                                      isAlwaysShown: true, child: showStocks()),
-                                )),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Scrollbar(
+                                        isAlwaysShown: true,
+                                        // child:GetBuilder< StocksController>(builder: (controller)=>
+                                        //    showStocks())));
+                                        // }
+                                        child: GetBuilder<StocksController>(
+                                          builder: (controller) =>
+                                              ListView.builder(
+                                                  itemCount: controller
+                                                      .stockList.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        ListTile(
+                                                          visualDensity:
+                                                              VisualDensity(
+                                                                  vertical: -4),
+
+                                                          leading: Text(
+                                                            '${controller.stockList[index].tickerSymbol}',
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                        .amber[
+                                                                    800]),
+                                                          ),
+                                                          title: Text(
+                                                              '${controller.stockList[index].companyName}'),
+                                                          subtitle: Text(
+                                                            '${controller.stockList[index].status}',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .blue[100]),
+                                                          ),
+                                                          trailing: Icon(
+                                                            Icons.addchart,
+                                                            color: Colors.amber,
+                                                          ),
+                                                          // trailing: Text('${controller.stockList[index].status}'),
+                                                          onTap: () {
+                                                            Get.toNamed(
+                                                                '${Routes.STOCK}',
+                                                                arguments: {
+                                                                  'tickerSymbol': controller
+                                                                      .stockList[
+                                                                          index]
+                                                                      .tickerSymbol
+                                                                });
+
+                                                            // controller
+                                                            //         .stockList[
+                                                            //             index]
+                                                            //         .companyName =
+                                                            //     "3434";
+
+                                                            // controller.update();
+                                                            // print(controller
+                                                            //     .stockList[
+                                                            //         index]
+                                                            //     .companyName
+                                                            //     .toString());
+                                                          },
+                                                        ),
+                                                        Divider(),
+                                                      ],
+                                                    );
+                                                  }),
+                                        )))),
                           ),
                         ),
                       ),
@@ -159,40 +258,45 @@ class StocksView extends GetView<StocksController> {
     );
   }
 
-  ListView showStocks() {
-    return ListView.builder(
-        itemCount: controller.stockList.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              ListTile(
-                visualDensity: VisualDensity(vertical: -4),
-                // contentPadding: EdgeInsets.zero,
-                // leading: Text('fdf'),
-                leading: Text(
-                  '${controller.stockList[index].tickerSymbol}',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.amber[800]),
-                ),
-                title: Text('${controller.stockList[index].companyName}'),
-                subtitle: Text(
-                  '${controller.stockList[index].status}',
-                  style: TextStyle(color: Colors.blue[100]),
-                ),
-                trailing: Icon(
-                  Icons.addchart,
-                  color: Colors.amber,
-                ),
-                // trailing: Text('${controller.stockList[index].status}'),
-                onTap: () {
-                  Get.toNamed('${Routes.STOCK}', arguments: {
-                    'tickerSymbol': controller.stockList[index].tickerSymbol
-                  });
-                },
-              ),
-              Divider(),
-            ],
-          );
-        });
-  }
+  // ListView showStocks() {
+  //   return ListView.builder(
+  //       itemCount: controller.stockList.length,
+  //       itemBuilder: (context, index) {
+  //         return Column(
+  //           children: [
+  //             ListTile(
+  //               visualDensity: VisualDensity(vertical: -4),
+  //               // contentPadding: EdgeInsets.zero,
+  //               // leading: Text('fdf'),
+  //               leading: Text(
+  //                 '${controller.stockList[index].tickerSymbol}',
+  //                 style: TextStyle(
+  //                     fontWeight: FontWeight.bold, color: Colors.amber[800]),
+  //               ),
+  //               title: Text('${controller.stockList[index].companyName}'),
+  //               subtitle: Text(
+  //                 '${controller.stockList[index].status}',
+  //                 style: TextStyle(color: Colors.blue[100]),
+  //               ),
+  //               trailing: Icon(
+  //                 Icons.addchart,
+  //                 color: Colors.amber,
+  //               ),
+  //               // trailing: Text('${controller.stockList[index].status}'),
+  //               onTap: () {
+  //                 // Get.toNamed('${Routes.STOCK}', arguments: {
+  //                 //   'tickerSymbol': controller.stockList[index].tickerSymbol
+  //                 // });
+
+  //                 controller.stockList[index].companyName = "3434";
+
+  //                 controller.update();
+  //                 print(controller.stockList[index].companyName.toString());
+  //               },
+  //             ),
+  //             Divider(),
+  //           ],
+  //         );
+  //       });
+  // }
 }
