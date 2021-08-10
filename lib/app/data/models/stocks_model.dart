@@ -1,38 +1,32 @@
-// class Stocks {
-//   List<Stockss>? stockss;
-
-//   Stocks({this.stockss});
-
-//   Stocks.fromJson(Map<String, dynamic> json) {
-//     if (json['stockss'] != null) {
-//       stockss = <Stockss>[];
-//       json['stockss'].forEach((v) {
-//         stockss!.add(Stockss.fromJson(v));
-//       });
-//     }
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final data = <String, dynamic>{};
-//     if (stockss != null) {
-//       data['stockss'] = stockss!.map((v) => v.toJson()).toList();
-//     }
-//     return data;
-//   }
-// }
-
 class Stocks {
   String? tickerSymbol;
   String? companyName;
   String? status;
+  double? currentPrice;
+  String? currency;
+  double? dayChange;
+  int? volume;
 
-  Stocks({this.tickerSymbol, this.companyName, this.status});
+  // Stocks({this.tickerSymbol, this.companyName, this.status});
+  Stocks(
+      {this.tickerSymbol,
+      this.companyName,
+      this.currentPrice,
+      this.currency,
+      this.dayChange,
+      this.volume});
 
   factory Stocks.fromJson(Map<String, dynamic> json) {
     return Stocks(
-      tickerSymbol: json['ticker_symbol'],
-      companyName: json['company_name'],
-      status: json['status'],
+      // tickerSymbol: json['ticker_symbol'],
+      tickerSymbol: json['symbol'],
+      // companyName: json['company_name'],
+      companyName: json['name'],
+      currentPrice: json['price']['amount'],
+      currency: json['price']['currency'],
+      dayChange: json['percent_change'],
+      volume: json['volume'],
+      // status: json['status'],
     );
   }
 

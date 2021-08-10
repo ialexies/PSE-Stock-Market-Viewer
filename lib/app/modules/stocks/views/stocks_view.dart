@@ -246,7 +246,6 @@ class StocksView extends GetView<StocksController> {
                                                                       VisualDensity(
                                                                           vertical:
                                                                               -4),
-
                                                                   leading: Text(
                                                                     '${controller.stockListFiltered[index].tickerSymbol}',
                                                                     style: TextStyle(
@@ -260,41 +259,38 @@ class StocksView extends GetView<StocksController> {
                                                                       '${controller.stockListFiltered[index].companyName}'),
                                                                   subtitle:
                                                                       Text(
-                                                                    '${controller.stockListFiltered[index].status}',
+                                                                    'Volume: ${controller.stockListFiltered[index].volume}',
                                                                     style: TextStyle(
                                                                         color: Colors
                                                                             .blue[100]),
                                                                   ),
                                                                   trailing:
-                                                                      Icon(
-                                                                    Icons
-                                                                        .addchart,
-                                                                    color: Colors
-                                                                        .amber,
+                                                                      Column(
+                                                                    children: [
+                                                                      Text(
+                                                                        '${controller.stockListFiltered[index].currentPrice}',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            fontSize: 18),
+                                                                      ),
+                                                                      Text(
+                                                                        '${controller.stockListFiltered[index].dayChange}%',
+                                                                        style: TextStyle(
+                                                                            fontWeight:
+                                                                                FontWeight.w100,
+                                                                            fontSize: 12),
+                                                                      ),
+                                                                    ],
                                                                   ),
-                                                                  // trailing: Text('${controller.stockList[index].status}'),
                                                                   onTap: () {
-                                                                    // Get.toNamed(
-                                                                    //     '${Routes.STOCK}',
-                                                                    //     arguments: {
-                                                                    //       'tickerSymbol': controller
-                                                                    //           .stockList[
-                                                                    //               index]
-                                                                    //           .tickerSymbol
-                                                                    //     });
-
-                                                                    controller
-                                                                        .stockListFiltered[
-                                                                            index]
-                                                                        .companyName = "3434";
-
-                                                                    controller
-                                                                        .update();
-                                                                    print(controller
-                                                                        .stockListFiltered[
-                                                                            index]
-                                                                        .companyName
-                                                                        .toString());
+                                                                    Get.toNamed(
+                                                                        '${Routes.STOCK}',
+                                                                        arguments: {
+                                                                          'tickerSymbol': controller
+                                                                              .stockList[index]
+                                                                              .tickerSymbol
+                                                                        });
                                                                   },
                                                                 ),
                                                                 Divider(),
