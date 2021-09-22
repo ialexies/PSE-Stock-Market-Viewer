@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:ph_stocks_viewer/app/data/models/stocks_model.dart';
-import 'package:ph_stocks_viewer/app/routes/app_pages.dart';
+import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
+import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 
 import '../controllers/stocks_controller.dart';
 
