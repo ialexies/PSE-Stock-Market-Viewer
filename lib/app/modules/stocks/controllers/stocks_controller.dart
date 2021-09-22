@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
+import 'package:ph_stocks_viewer/app/data/models/stocks_model.dart';
 // import 'package:getx_stocks_pse/app/data/providers/stock_provider.dart';
-import 'package:getx_stocks_pse/app/data/services/stocks_service.dart';
+import 'package:ph_stocks_viewer/app/data/services/stocks_service.dart';
 import 'dart:convert';
 
 class StocksController extends GetxController {
@@ -9,6 +9,7 @@ class StocksController extends GetxController {
 
   // final count = 0.obs;
   List<Stocks> stockList = <Stocks>[].obs;
+  var isLoading = true.obs;
   final StocksService _stocksService = StocksService();
 
   @override
@@ -34,5 +35,9 @@ class StocksController extends GetxController {
     result["stocks"].forEach((data) {
       stockList.add(Stocks.fromJson(data));
     });
+    // this.isLoading = false;
+    isLoading(false);
+
+    // isLoading = false;
   }
 }
