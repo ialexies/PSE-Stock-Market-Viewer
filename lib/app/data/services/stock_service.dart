@@ -5,6 +5,7 @@ class StockService {
 
   getStock(tickerSymbol) async {
     // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
-    return await repository.httpGet(api: "/stocks/${tickerSymbol}");
+    // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
+    return await repository.httpGet(api: "meta/symbols/AAPL/company");
   }
 }

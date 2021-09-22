@@ -4,6 +4,8 @@ class StocksService {
   Repository _repository = Repository();
 
   getStocks() async {
-    return await _repository.httpGet(api: "/stocks");
+    // return await _repository.httpGet(api: "/stocks");
+    // US Stocks
+    return await _repository.httpGet(api: "reference/tickers");
   }
 }

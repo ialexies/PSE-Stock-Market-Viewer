@@ -32,7 +32,7 @@ class StocksController extends GetxController {
     var stocks = await _stocksService.getStocks();
     var result = json.decode(stocks.body);
 
-    result["stocks"].forEach((data) {
+    result["results"].forEach((data) {
       stockList.add(Stocks.fromJson(data));
     });
     // this.isLoading = false;

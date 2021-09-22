@@ -24,15 +24,26 @@
 class Stocks {
   String? tickerSymbol;
   String? companyName;
-  String? status;
+  double? price;
+  bool? status;
 
   Stocks({this.tickerSymbol, this.companyName, this.status});
 
+  // factory Stocks.fromJson(Map<String, dynamic> json) {
+  //   return Stocks(
+  //     tickerSymbol: json['ticker_symbol'],
+  //     companyName: json['company_name'],
+  //     status: json['status'],
+  //   );
+  // }
+
+  // US Stocks
   factory Stocks.fromJson(Map<String, dynamic> json) {
     return Stocks(
-      tickerSymbol: json['ticker_symbol'],
-      companyName: json['company_name'],
-      status: json['status'],
+      tickerSymbol: json['ticker'],
+      companyName: json['name'],
+      // status: json['active'],
+      status: json['active'] == 'true',
     );
   }
 

@@ -19,6 +19,7 @@ class StocksView extends GetView<StocksController> {
       body: Center(
         child: Obx(() {
           return Container(
+            // width: double.infinity,
             child: controller.isLoading.value
                 ? CircularProgressIndicator()
                 : Scrollbar(
@@ -33,6 +34,8 @@ class StocksView extends GetView<StocksController> {
                               ),
                               subtitle: Text(
                                   '${controller.stockList[index].companyName}'),
+                              // trailing:
+                              //     Text('${controller.stockList[index].status}'),
                               trailing:
                                   Text('${controller.stockList[index].status}'),
                               onTap: () {
