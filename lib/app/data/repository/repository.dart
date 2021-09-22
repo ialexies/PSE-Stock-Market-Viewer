@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Repository {
   // String _baseUrl_pseLookup = "https://pselookup.vrymel.com/api/stocks/";
@@ -19,8 +20,11 @@ class Repository {
     //   return await http.get(Uri.parse(
     //       _baseUrl_pseLookup + "${tickerSymbol}/history/0000-00-00/2020-03-19"));
     // }
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String dateFormatted = formatter.format(now);
     return await http.get(Uri.parse(
-        "https://pselookup.vrymel.com/api/stocks/ABS/history/0000-00-00/2020-03-19"));
+        "https://pselookup.vrymel.com/api/stocks/${tickerSymbol}/history/2021-01-19/${dateFormatted}"));
   }
 
   getBaseUrl() {
