@@ -16,6 +16,15 @@ class Stocks {
       this.dayChange,
       this.volume});
 
+  // factory Stocks.fromJson(Map<String, dynamic> json) {
+  //   return Stocks(
+  //     tickerSymbol: json['ticker_symbol'],
+  //     companyName: json['company_name'],
+  //     status: json['status'],
+  //   );
+  // }
+
+  // US Stocks
   factory Stocks.fromJson(Map<String, dynamic> json) {
     return Stocks(
       // tickerSymbol: json['ticker_symbol'],
