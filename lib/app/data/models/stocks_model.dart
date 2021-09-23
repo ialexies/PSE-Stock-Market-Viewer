@@ -1,26 +1,3 @@
-// class Stocks {
-//   List<Stockss>? stockss;
-
-//   Stocks({this.stockss});
-
-//   Stocks.fromJson(Map<String, dynamic> json) {
-//     if (json['stockss'] != null) {
-//       stockss = <Stockss>[];
-//       json['stockss'].forEach((v) {
-//         stockss!.add(Stockss.fromJson(v));
-//       });
-//     }
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final data = <String, dynamic>{};
-//     if (stockss != null) {
-//       data['stockss'] = stockss!.map((v) => v.toJson()).toList();
-//     }
-//     return data;
-//   }
-// }
-
 class Stocks {
   String? tickerSymbol;
   String? companyName;
@@ -72,7 +49,9 @@ class Stocks {
   // US Stocks
   factory Stocks.fromJson(Map<String, dynamic> json) {
     return Stocks(
+      // tickerSymbol: json['ticker_symbol'],
       tickerSymbol: json['symbol'],
+      // companyName: json['company_name'],
       companyName: json['name'],
       marketCap: json['market_cap'].toString(),
       price: json['current_price'].toString(),
