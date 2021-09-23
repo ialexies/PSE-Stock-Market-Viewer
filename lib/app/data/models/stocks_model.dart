@@ -43,7 +43,7 @@ class Stocks {
     final data = <String, dynamic>{};
     data['ticker_symbol'] = tickerSymbol;
     data['company_name'] = companyName;
-    data['status'] = status;
+    // data['status'] = status;
     return data;
   }
 }
