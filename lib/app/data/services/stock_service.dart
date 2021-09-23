@@ -6,6 +6,15 @@ class StockService {
   getStock(tickerSymbol) async {
     // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
     // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
-    return await repository.httpGet(api: "meta/symbols/AAPL/company");
+    var queryParameters = {
+      '': '',
+      // 'order': 'asc',
+      // 'active': 'true',
+      // 'sort': 'ticker',
+      // 'market': 'crypto',
+      // 'limit': '1000'
+    };
+    return await repository.httpGet(
+        api: "meta/symbols/AAPL/company", queryParameters: queryParameters);
   }
 }

@@ -28,16 +28,32 @@ class StocksView extends GetView<StocksController> {
                         itemBuilder: (context, index) {
                           return Container(
                             child: ListTile(
-                              title: Text(
-                                '${controller.stockList[index].tickerSymbol}',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.network(
+                                    '${controller.stockList[index].img}'),
+                              ),
+                              title: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${controller.stockList[index].companyName}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '${controller.stockList[index].marketCap}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
                               subtitle: Text(
-                                  '${controller.stockList[index].companyName}'),
+                                  '${controller.stockList[index].tickerSymbol}'),
+                              trailing: Text(
+                                  '\$ ${controller.stockList[index].price}'),
                               // trailing:
                               //     Text('${controller.stockList[index].status}'),
-                              trailing:
-                                  Text('${controller.stockList[index].status}'),
                               onTap: () {
                                 Get.toNamed('${Routes.STOCK}', arguments: {
                                   'tickerSymbol':
