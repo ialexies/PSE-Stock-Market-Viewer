@@ -4,6 +4,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
 import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 
@@ -72,11 +73,11 @@ class StocksView extends GetView<StocksController> {
                                 children: [
                                   Text(
                                     'Market Cap:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].marketCap.toString()))}',
-                                    style: myStyleSubtitle(),
+                                    style: TextStyles().myStyleSubtitle(),
                                   ),
                                   Text(
                                     'Volume:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].totalVolume.toString()))}',
-                                    style: myStyleSubtitle(),
+                                    style: TextStyles().myStyleSubtitle(),
                                   ),
                                 ],
                               ),
@@ -104,11 +105,11 @@ class StocksView extends GetView<StocksController> {
                                         ),
                                         Text(
                                           'High: \$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].high24h.toString()))}  ',
-                                          style: myStyleSubtitle(),
+                                          style: TextStyles().myStyleSubtitle(),
                                         ),
                                         Text(
                                           'Low: \$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].low24h.toString()))} ',
-                                          style: myStyleSubtitle(),
+                                          style: TextStyles().myStyleSubtitle(),
                                         ),
                                       ],
                                     ),
@@ -122,13 +123,6 @@ class StocksView extends GetView<StocksController> {
           );
         }),
       ),
-    );
-  }
-
-  TextStyle myStyleSubtitle() {
-    return TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 10,
     );
   }
 }
