@@ -45,12 +45,11 @@ class Stocks {
   // US Stocks
   factory Stocks.fromJson(Map<String, dynamic> json) {
     return Stocks(
-      // tickerSymbol: json['ticker_symbol'],
       tickerSymbol: json['symbol'],
-      // companyName: json['company_name'],
       companyName: json['name'],
-      img: json['image'],
       price: json['current_price'].toString(),
+      img: json['image'],
+
       marketCap: json['market_cap'].toString(),
       // status: json['active'],
       // status: json['active'] == 'true',

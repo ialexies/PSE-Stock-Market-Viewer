@@ -4,11 +4,28 @@ import 'package:intl/intl.dart';
 class Repository {
   // String _baseUrl_pseLookup = "https://pselookup.vrymel.com/api/stocks/";
   String _baseUrl2 = "https://pselookup.vrymel.com";
-  String _baseUrl = "http://phisix-api4.appspot.com/stocks.json";
+  // String _baseUrl = "http://phisix-api4.appspot.com/stocks.json";
+  String _baseUrl = "api.coingecko.com";
 
   httpGetStocks({required String api}) async {
     // return await http.get(Uri.parse(_baseUrl + "/api" + api));
-    return await http.get(Uri.parse(_baseUrl));
+
+    Map<String, String> qParams = {
+      'vs_currency': 'usd',
+      'order': 'market_cap_desc',
+      'per_page': '100',
+      'page': '1',
+      'sparkline': 'false',
+    };
+
+    api = "/api/v3/coins/markets";
+
+    final uri = Uri.https(
+      _baseUrl,
+      api,
+      qParams,
+    );
+    return await http.get(uri);
   }
 
   httpGetStock({required String api}) async {
@@ -16,10 +33,6 @@ class Repository {
   }
 
   httpGetStockHistory({required String tickerSymbol}) async {
-    // return await http.get(Uri.parse(_baseUrl + "/api" + api));
-    //   return await http.get(Uri.parse(
-    //       _baseUrl_pseLookup + "${tickerSymbol}/history/0000-00-00/2020-03-19"));
-    // }
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String dateFormatted = formatter.format(now);
