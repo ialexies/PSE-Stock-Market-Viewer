@@ -4,7 +4,6 @@ class Stocks {
   String? price;
   String? img;
   String? marketCap;
-  // bool? status;
   String? marketCapRank;
   String? fullyDilutedValuation;
   String? totalVolume;
@@ -30,17 +29,12 @@ class Stocks {
     this.tickerSymbol,
     this.companyName,
     this.price,
+    this.high24h,
+    this.low24h,
     this.img,
     this.marketCap,
+    this.totalVolume,
   });
-
-  // factory Stocks.fromJson(Map<String, dynamic> json) {
-  //   return Stocks(
-  //     tickerSymbol: json['ticker_symbol'],
-  //     companyName: json['company_name'],
-  //     status: json['status'],
-  //   );
-  // }
 
   // US Stocks
   factory Stocks.fromJson(Map<String, dynamic> json) {
@@ -48,11 +42,11 @@ class Stocks {
       tickerSymbol: json['symbol'],
       companyName: json['name'],
       price: json['current_price'].toString(),
+      high24h: json['high_24h'].toString(),
+      low24h: json['low_24h'].toString(),
       img: json['image'],
-
       marketCap: json['market_cap'].toString(),
-      // status: json['active'],
-      // status: json['active'] == 'true',
+      totalVolume: json['total_volume'].toString(),
     );
   }
 
@@ -60,7 +54,6 @@ class Stocks {
     final data = <String, dynamic>{};
     data['ticker_symbol'] = tickerSymbol;
     data['company_name'] = companyName;
-    // data['status'] = status;
     return data;
   }
 }
