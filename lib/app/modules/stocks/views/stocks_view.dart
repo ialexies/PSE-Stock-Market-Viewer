@@ -14,6 +14,7 @@ import 'package:intl/intl.dart' as intl;
 class StocksView extends GetView<StocksController> {
   // final formatter = intl.NumberFormat.decimalPattern().format(1234);
   // Stock _stockService = StockService
+  final decimalFormatter = intl.NumberFormat.decimalPattern();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,13 +100,16 @@ class StocksView extends GetView<StocksController> {
                                             text: TextSpan(
                                           children: [
                                             TextSpan(
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 10,
-                                                  color: Colors.black,
-                                                ),
-                                                text:
-                                                    '${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList.value[index].price.toString()))}'),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                              ),
+                                              // text:
+                                              //     '${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList.value[index].price.toString()))}',
+                                              text:
+                                                  '${decimalFormatter.format(controller.stockList.value[index].price)}',
+                                            ),
                                             TextSpan(text: '  '),
                                             TextSpan(
                                                 style: TextStyle(
@@ -115,23 +119,14 @@ class StocksView extends GetView<StocksController> {
                                                 ),
                                                 text:
                                                     '${controller.stockList.value[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
-                                            // TextSpan(text: 'fdfdf'),
                                           ],
                                         )),
-                                        // Text(
-                                        //   '\$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList.value[index].price.toString()))}  ${controller.stockList.value[index].priceChangePercentage24h?.toStringAsFixed(2)}%',
-                                        //   style: TextStyle(
-                                        //     fontSize: 14,
-                                        //     fontWeight: FontWeight.bold,
-                                        //   ),
-                                        //   textAlign: TextAlign.left,
-                                        // ),
                                         Text(
-                                          'High: \$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].high24h.toString()))}  ',
+                                          'High: \$${decimalFormatter.format(controller.stockList[index].high24h)}  ',
                                           style: TextStyles().myStyleSubtitle(),
                                         ),
                                         Text(
-                                          'Low: \$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].low24h.toString()))} ',
+                                          'Low: \$${decimalFormatter.format(controller.stockList[index].low24h)} ',
                                           style: TextStyles().myStyleSubtitle(),
                                         ),
                                       ],

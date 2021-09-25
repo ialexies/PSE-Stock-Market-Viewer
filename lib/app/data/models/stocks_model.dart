@@ -1,14 +1,14 @@
 class Stocks {
   String? tickerSymbol;
   String? companyName;
-  String? price;
+  double? price;
   String? img;
   String? marketCap;
   String? marketCapRank;
   String? fullyDilutedValuation;
   String? totalVolume;
-  String? high24h;
-  String? low24h;
+  double? high24h;
+  double? low24h;
   String? priceChange24h;
   double? priceChangePercentage24h;
   String? marketCapChange24h;
@@ -42,9 +42,9 @@ class Stocks {
     return Stocks(
       tickerSymbol: json['symbol'],
       companyName: json['name'],
-      price: json['current_price'].toString(),
-      high24h: json['high_24h'].toString(),
-      low24h: json['low_24h'].toString(),
+      price: json['current_price'].toDouble(),
+      high24h: json['high_24h'].toDouble(),
+      low24h: json['low_24h'].toDouble(),
       priceChangePercentage24h: json['price_change_percentage_24h'],
       img: json['image'],
       marketCap: json['market_cap'].toString(),
