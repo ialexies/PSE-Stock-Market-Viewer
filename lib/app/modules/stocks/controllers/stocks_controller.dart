@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,8 +15,11 @@ class StocksController extends GetxController {
   //TODO: Implement StocksController
 
   // final count = 0.obs;
-  List<Stocks> stockList = <Stocks>[].obs;
+  var stockList = <Stocks>[].obs;
   List<Stocks> stockListFiltered = <Stocks>[].obs;
+  var stockStreamController = StreamController<Stocks>().obs;
+  var isStreamOn = true.obs;
+  var stocks = Stocks().obs;
   var isLoading = true.obs;
   var searchType = "Company Name".obs;
 
@@ -23,7 +28,8 @@ class StocksController extends GetxController {
   @override
   void onInit() {
     // fetchStocks();
-    _getAllProducts();
+    // _getAllProducts();
+    stockStreamController.value.addStream(stockStream());
     super.onInit();
   }
 
@@ -36,6 +42,29 @@ class StocksController extends GetxController {
 
   @override
   void onClose() {}
+
+  @override
+  Stream<Stocks> stockStream() async* {
+    while (isStreamOn.value == true) {
+      await Future.delayed(Duration(milliseconds: 1000));
+      try {
+        var response = await _stocksService.getStocks();
+        var result = json.decode(response.body);
+        List<Stocks> tempStockList = [];
+        // print(result);
+        result.forEach((data) {
+          // stockList.add(Stocks.fromJson(data));
+          tempStockList.add(Stocks.fromJson(data));
+        });
+        stockList.value = tempStockList;
+        // stocks.value = currentStocks;
+        isLoading.value = false;
+        stockListFiltered = await stockList;
+      } catch (e) {
+        // isLoading.value = true;
+      }
+    }
+  }
 
   void _getAllProducts() async {
     var stocks = await _stocksService.getStocks();

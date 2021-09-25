@@ -95,14 +95,37 @@ class StocksView extends GetView<StocksController> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          '\$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].price.toString()))}',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
+                                        RichText(
+                                            text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 10,
+                                                  color: Colors.black,
+                                                ),
+                                                text:
+                                                    '${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList.value[index].price.toString()))}'),
+                                            TextSpan(text: '  '),
+                                            TextSpan(
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w100,
+                                                  fontSize: 8,
+                                                  color: Colors.black,
+                                                ),
+                                                text:
+                                                    '${controller.stockList.value[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
+                                            // TextSpan(text: 'fdfdf'),
+                                          ],
+                                        )),
+                                        // Text(
+                                        //   '\$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList.value[index].price.toString()))}  ${controller.stockList.value[index].priceChangePercentage24h?.toStringAsFixed(2)}%',
+                                        //   style: TextStyle(
+                                        //     fontSize: 14,
+                                        //     fontWeight: FontWeight.bold,
+                                        //   ),
+                                        //   textAlign: TextAlign.left,
+                                        // ),
                                         Text(
                                           'High: \$${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].high24h.toString()))}  ',
                                           style: TextStyles().myStyleSubtitle(),
