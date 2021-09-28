@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,20 +13,17 @@ import '../controllers/stocks_controller.dart';
 import 'package:intl/intl.dart' as intl;
 
 class StocksView extends GetView<StocksController> {
-  // final formatter = intl.NumberFormat.decimalPattern().format(1234);
-  // Stock _stockService = StockService
   final decimalFormatter = intl.NumberFormat.decimalPattern();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crypto Currencies'),
+        title: Text('CRYPTOS'),
         centerTitle: true,
       ),
       body: Center(
         child: Obx(() {
           return Container(
-            // width: double.infinity,
             child: controller.isLoading.value
                 ? CircularProgressIndicator()
                 : Scrollbar(
@@ -35,7 +33,11 @@ class StocksView extends GetView<StocksController> {
                           return Container(
                             child: ListTile(
                               onTap: () {
-                                print(controller.stockList[index].tickerSymbol);
+                                // print(controller.stockList[index].tickerSymbol);
+                                // Get.toNamed(Routes.STOCK, parameters:controller.stockList[index] );
+                                Get.toNamed(Routes.STOCK,
+                                    parameters:
+                                        toMap(controller.stockList[index]));
                               },
                               leading: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -45,27 +47,28 @@ class StocksView extends GetView<StocksController> {
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  RichText(
-                                      text: TextSpan(
+                                  AutoSizeText.rich(
+                                    TextSpan(children: [
+                                      TextSpan(
+                                        text:
+                                            '${controller.stockList[index].tickerSymbol}'
+                                                .toUpperCase(),
+                                        style: TextStyle(
+                                            color: Colors.grey[800],
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(
                                           style: TextStyle(
                                             fontWeight: FontWeight.w300,
-                                            fontSize: 18,
                                             color: Colors.black,
                                           ),
-                                          children: [
-                                        TextSpan(
                                           text:
-                                              '${controller.stockList[index].tickerSymbol}'
-                                                  .toUpperCase(),
-                                          style: TextStyle(
-                                              color: Colors.grey[800],
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextSpan(
-                                            text:
-                                                '- ${controller.stockList[index].companyName}'
-                                                    .toUpperCase()),
-                                      ])),
+                                              '- ${controller.stockList[index].companyName}'
+                                                  .toUpperCase()),
+                                    ]),
+                                    minFontSize: 4,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ],
                               ),
                               subtitle: Column(
@@ -105,17 +108,22 @@ class StocksView extends GetView<StocksController> {
                                                 fontSize: 10,
                                                 color: Colors.black,
                                               ),
-                                              // text:
-                                              //     '${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList.value[index].price.toString()))}',
                                               text:
                                                   '${decimalFormatter.format(controller.stockList.value[index].price)}',
                                             ),
-                                            TextSpan(text: '  '),
+                                            TextSpan(text: ' '),
                                             TextSpan(
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.w100,
-                                                  fontSize: 8,
-                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 10,
+                                                  color: controller
+                                                              .stockList
+                                                              .value[index]
+                                                              .priceChangePercentage24h!
+                                                              .toDouble() >=
+                                                          1
+                                                      ? Colors.blue
+                                                      : Colors.red,
                                                 ),
                                                 text:
                                                     '${controller.stockList.value[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
@@ -142,5 +150,20 @@ class StocksView extends GetView<StocksController> {
         }),
       ),
     );
+  }
+
+  toMap(Stocks stocks) {
+    var map = Map<String, String>();
+    map['tickerSymbol'] = stocks.tickerSymbol.toString();
+    map['companyName'] = stocks.companyName.toString();
+    map['price'] = stocks.price.toString();
+    map['high24h'] = stocks.high24h.toString();
+    map['low24h'] = stocks.low24h.toString();
+    map['priceChangePercentage24h'] =
+        stocks.priceChangePercentage24h.toString();
+    map['img'] = stocks.img.toString();
+    map['marketCap'] = stocks.marketCap.toString();
+    map['totalVolume'] = stocks.totalVolume.toString();
+    return map;
   }
 }
