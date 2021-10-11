@@ -22,6 +22,8 @@ class StocksController extends GetxController {
   var stocks = Stocks().obs;
   var isLoading = true.obs;
   var searchType = "Company Name".obs;
+  var isSearch = false.obs;
+  var searchText = "".obs;
 
   final StocksService _stocksService = StocksService();
 
@@ -59,11 +61,26 @@ class StocksController extends GetxController {
         stockList.value = tempStockList;
         // stocks.value = currentStocks;
         isLoading.value = false;
-        stockListFiltered = await stockList;
+        // stockListFiltered = await stockList;
+        // isSearch.value ?? searchFilter("z");
+        if (isSearch.value == true && searchText.value != "") {
+          searchFilter(searchText.value);
+        } else if (isSearch.value == false && searchText.value == "") {
+          // searchFilter(searchText.value);
+          stockListFiltered = stockList;
+        } else {
+          stockListFiltered = stockList;
+        }
+        // searchFilter("z");
       } catch (e) {
         // isLoading.value = true;
       }
     }
+  }
+
+  updateSearchStatus(bool val) {
+    isSearch.value = val;
+    update();
   }
 
   void _getAllProducts() async {
@@ -92,8 +109,9 @@ class StocksController extends GetxController {
 
     // stockListFiltered.clear();
     stockListFiltered = filteredResult;
+    // isSearch.value = false;
     // stockList = stockListFiltered;
     update();
-    Get.back();
+    // Get.back();
   }
 }

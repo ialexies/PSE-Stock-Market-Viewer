@@ -14,6 +14,8 @@ import 'package:intl/intl.dart' as intl;
 
 class StocksView extends GetView<StocksController> {
   final decimalFormatter = intl.NumberFormat.decimalPattern();
+  TextEditingController searchTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,27 +24,27 @@ class StocksView extends GetView<StocksController> {
         centerTitle: true,
       ),
       body: Center(
-        child: Obx(() {
-          return Container(
+        child: Obx(
+          () => Container(
             child: controller.isLoading.value
                 ? CircularProgressIndicator()
                 : Scrollbar(
                     child: ListView.builder(
-                        itemCount: controller.stockList.length,
+                        itemCount: controller.stockListFiltered.length,
                         itemBuilder: (context, index) {
                           return Container(
                             child: ListTile(
                               onTap: () {
                                 // print(controller.stockList[index].tickerSymbol);
                                 // Get.toNamed(Routes.STOCK, parameters:controller.stockList[index] );
-                                Get.toNamed(Routes.STOCK,
-                                    parameters:
-                                        toMap(controller.stockList[index]));
+                                // Get.toNamed(Routes.STOCK,
+                                //     parameters:
+                                //         toMap(controller.stockList[index]));
                               },
                               leading: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Image.network(
-                                    '${controller.stockList[index].img}'),
+                                    '${controller.stockListFiltered[index].img}'),
                               ),
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +53,7 @@ class StocksView extends GetView<StocksController> {
                                     TextSpan(children: [
                                       TextSpan(
                                         text:
-                                            '${controller.stockList[index].tickerSymbol}'
+                                            '${controller.stockListFiltered[index].tickerSymbol}'
                                                 .toUpperCase(),
                                         style: TextStyle(
                                             color: Colors.grey[800],
@@ -63,7 +65,7 @@ class StocksView extends GetView<StocksController> {
                                             color: Colors.black,
                                           ),
                                           text:
-                                              '- ${controller.stockList[index].companyName}'
+                                              '- ${controller.stockListFiltered[index].companyName}'
                                                   .toUpperCase()),
                                     ]),
                                     minFontSize: 4,
@@ -76,11 +78,11 @@ class StocksView extends GetView<StocksController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Market Cap:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].marketCap.toString()))}',
+                                    'Market Cap:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockListFiltered[index].marketCap.toString()))}',
                                     style: TextStyles().myStyleSubtitle(),
                                   ),
                                   Text(
-                                    'Volume:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockList[index].totalVolume.toString()))}',
+                                    'Volume:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockListFiltered[index].totalVolume.toString()))}',
                                     style: TextStyles().myStyleSubtitle(),
                                   ),
                                 ],
@@ -109,7 +111,7 @@ class StocksView extends GetView<StocksController> {
                                                 color: Colors.black,
                                               ),
                                               text:
-                                                  '${decimalFormatter.format(controller.stockList.value[index].price)}',
+                                                  '${decimalFormatter.format(controller.stockListFiltered[index].price)}',
                                             ),
                                             TextSpan(text: ' '),
                                             TextSpan(
@@ -126,15 +128,15 @@ class StocksView extends GetView<StocksController> {
                                                       : Colors.red,
                                                 ),
                                                 text:
-                                                    '${controller.stockList.value[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
+                                                    '${controller.stockListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
                                           ],
                                         )),
                                         Text(
-                                          'High: \$${decimalFormatter.format(controller.stockList[index].high24h)}  ',
+                                          'High: \$${decimalFormatter.format(controller.stockListFiltered[index].high24h)}  ',
                                           style: TextStyles().myStyleSubtitle(),
                                         ),
                                         Text(
-                                          'Low: \$${decimalFormatter.format(controller.stockList[index].low24h)} ',
+                                          'Low: \$${decimalFormatter.format(controller.stockListFiltered[index].low24h)} ',
                                           style: TextStyles().myStyleSubtitle(),
                                         ),
                                       ],
@@ -146,8 +148,43 @@ class StocksView extends GetView<StocksController> {
                           );
                         }),
                   ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.search),
+        onPressed: () {
+          Get.defaultDialog(
+            onConfirm: () {
+              controller.isSearch(true);
+              controller.searchText(searchTextController.text);
+              Get.back();
+            },
+            onCancel: () {
+              controller.isSearch(false);
+              controller.searchText("");
+              Get.back();
+            },
+            textCancel: "Clear Search",
+            textConfirm: "Search",
+            title: "Search By Name",
+            content: Column(
+              children: [
+                TextField(
+                  controller: searchTextController,
+                  onChanged: (value) {
+                    debugPrint('Something changed in Title Text Field');
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'Title',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0))),
+                ),
+              ],
+            ),
           );
-        }),
+        },
       ),
     );
   }
