@@ -24,6 +24,12 @@ class StocksController extends GetxController {
   var searchType = "Company Name".obs;
   var isSearch = false.obs;
   var searchText = "".obs;
+  // var currencies = <String>['USD', 'PHP'].obs;
+  var currencies = <Map>[
+    {"currency": "USD", "symbol": "\$"},
+    {"currency": "PHP", "symbol": "Php"},
+  ].obs;
+  var currencySelected = "USD".obs;
 
   final StocksService _stocksService = StocksService();
 
@@ -48,9 +54,10 @@ class StocksController extends GetxController {
   @override
   Stream<Stocks> stockStream() async* {
     while (isStreamOn.value == true) {
-      await Future.delayed(Duration(milliseconds: 1000));
+      await Future.delayed(Duration(milliseconds: 5000));
       try {
-        var response = await _stocksService.getStocks();
+        var response = await _stocksService.getStocks(
+            selectedCurrency: currencySelected.value);
         var result = json.decode(response.body);
         List<Stocks> tempStockList = [];
         // print(result);
@@ -80,6 +87,11 @@ class StocksController extends GetxController {
 
   updateSearchStatus(bool val) {
     isSearch.value = val;
+    update();
+  }
+
+  updateCurrencySelected(String val) {
+    currencySelected.value = val;
     update();
   }
 

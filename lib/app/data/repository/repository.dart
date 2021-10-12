@@ -7,13 +7,14 @@ class Repository {
   // String _baseUrl = "http://phisix-api4.appspot.com/stocks.json";
   String _baseUrl = "api.coingecko.com";
 
-  httpGetStocks({required String api}) async {
+  httpGetStocks({required String api, required String selectedCurrency}) async {
     // return await http.get(Uri.parse(_baseUrl + "/api" + api));
 
     Map<String, String> qParams = {
-      'vs_currency': 'usd',
+      // 'vs_currency': '$selectedCurrency',
+      'vs_currency': 'php',
       'order': 'market_cap_desc',
-      'per_page': '100',
+      'per_page': '1000',
       'page': '1',
       'sparkline': 'false',
     };

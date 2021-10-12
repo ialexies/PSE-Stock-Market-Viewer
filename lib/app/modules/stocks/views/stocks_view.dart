@@ -15,13 +15,44 @@ import 'package:intl/intl.dart' as intl;
 class StocksView extends GetView<StocksController> {
   final decimalFormatter = intl.NumberFormat.decimalPattern();
   TextEditingController searchTextController = TextEditingController();
+  // List<String> currencies = ['USD', 'PHP'];
 
   @override
   Widget build(BuildContext context) {
+    // String dropdownValue = currencies[0];
     return Scaffold(
       appBar: AppBar(
         title: Text('CRYPTOS'),
         centerTitle: true,
+        actions: [
+          Obx(() => DropdownButton<String>(
+                value: controller.currencySelected.value,
+                icon: const Icon(Icons.arrow_downward),
+                iconSize: 24,
+                elevation: 16,
+                style: const TextStyle(color: Colors.deepPurple),
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (String? newValue) {
+                  controller.updateCurrencySelected(newValue!);
+                  // setState(() {
+                  //   dropdownValue = newValue!;
+                  // });
+                },
+                // items:
+                items: <Map>[
+                  {"currency": "USD", "symbol": "\$"},
+                  {"currency": "PHP", "symbol": "Php"},
+                ].map<DropdownMenuItem<String>>((Map value) {
+                  return DropdownMenuItem<String>(
+                    value: value["currency"],
+                    child: Text(value["currency"]),
+                  );
+                }).toList(),
+              )),
+        ],
       ),
       body: Center(
         child: Obx(
