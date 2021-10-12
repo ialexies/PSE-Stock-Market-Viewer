@@ -25,32 +25,57 @@ class StocksView extends GetView<StocksController> {
         title: Text('CRYPTOS'),
         centerTitle: true,
         actions: [
-          Obx(() => DropdownButton<String>(
-                value: controller.currencySelected.value,
-                icon: const Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                style: const TextStyle(color: Colors.deepPurple),
-                underline: Container(
-                  height: 2,
-                  color: Colors.deepPurpleAccent,
+          Obx(() => Container(
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white, width: .5),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue[600],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(3, 3), // changes position of shadow
+                      ),
+                      BoxShadow(
+                        color: Colors.white.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(-2, -2), // changes position of shadow
+                      ),
+                    ]),
+                child: DropdownButton<String>(
+                  borderRadius: BorderRadius.circular(10),
+                  value: controller.currencySelected.value,
+                  icon: const Icon(Icons.arrow_downward),
+                  iconSize: 18,
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.white),
+                  iconDisabledColor: Colors.green,
+                  // hint: Text('Select Item'),
+                  dropdownColor: Colors.blue[600],
+                  iconEnabledColor: Colors.yellow,
+                  underline: SizedBox(
+                      // height: 2,
+                      // color: Colors.deepPurpleAccent,
+                      ),
+                  onChanged: (String? newValue) {
+                    controller.isLoading(true);
+                    controller.updateCurrencySelected(newValue!);
+                  },
+                  // items:
+                  items: controller.currencies
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          // style: TextStyle(color: Colors.red),
+                        ));
+                  }).toList(),
                 ),
-                onChanged: (String? newValue) {
-                  controller.updateCurrencySelected(newValue!);
-                  // setState(() {
-                  //   dropdownValue = newValue!;
-                  // });
-                },
-                // items:
-                items: <Map>[
-                  {"currency": "USD", "symbol": "\$"},
-                  {"currency": "PHP", "symbol": "Php"},
-                ].map<DropdownMenuItem<String>>((Map value) {
-                  return DropdownMenuItem<String>(
-                    value: value["currency"],
-                    child: Text(value["currency"]),
-                  );
-                }).toList(),
               )),
         ],
       ),
@@ -64,6 +89,7 @@ class StocksView extends GetView<StocksController> {
                         itemCount: controller.stockListFiltered.length,
                         itemBuilder: (context, index) {
                           return Container(
+                            // padding: EdgeInsets.all(value),
                             child: ListTile(
                               onTap: () {
                                 // print(controller.stockList[index].tickerSymbol);
@@ -73,7 +99,7 @@ class StocksView extends GetView<StocksController> {
                                 //         toMap(controller.stockList[index]));
                               },
                               leading: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(.0),
                                 child: Image.network(
                                     '${controller.stockListFiltered[index].img}'),
                               ),
@@ -142,7 +168,7 @@ class StocksView extends GetView<StocksController> {
                                                 color: Colors.black,
                                               ),
                                               text:
-                                                  '${decimalFormatter.format(controller.stockListFiltered[index].price)}',
+                                                  '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].price)}',
                                             ),
                                             TextSpan(text: ' '),
                                             TextSpan(
@@ -163,12 +189,16 @@ class StocksView extends GetView<StocksController> {
                                           ],
                                         )),
                                         Text(
-                                          'High: \$${decimalFormatter.format(controller.stockListFiltered[index].high24h)}  ',
-                                          style: TextStyles().myStyleSubtitle(),
+                                          'High: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].high24h)}  ',
+                                          style: TextStyles()
+                                              .myStyleSubtitle()
+                                              .copyWith(fontSize: 9),
                                         ),
                                         Text(
-                                          'Low: \$${decimalFormatter.format(controller.stockListFiltered[index].low24h)} ',
-                                          style: TextStyles().myStyleSubtitle(),
+                                          'Low: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].low24h)} ',
+                                          style: TextStyles()
+                                              .myStyleSubtitle()
+                                              .copyWith(fontSize: 9),
                                         ),
                                       ],
                                     ),
@@ -187,6 +217,8 @@ class StocksView extends GetView<StocksController> {
         child: Icon(Icons.search),
         onPressed: () {
           Get.defaultDialog(
+            contentPadding: EdgeInsets.all(20),
+            titlePadding: EdgeInsets.all(20),
             onConfirm: () {
               controller.isSearch(true);
               controller.searchText(searchTextController.text);

@@ -24,12 +24,10 @@ class StocksController extends GetxController {
   var searchType = "Company Name".obs;
   var isSearch = false.obs;
   var searchText = "".obs;
-  // var currencies = <String>['USD', 'PHP'].obs;
-  var currencies = <Map>[
-    {"currency": "USD", "symbol": "\$"},
-    {"currency": "PHP", "symbol": "Php"},
-  ].obs;
+  var currencies = <String>['USD', 'PHP'].obs;
+  var currenciesSymbols = <String>['\$', 'Php'].obs;
   var currencySelected = "USD".obs;
+  var currencySelectedSymbol = "\$".obs;
 
   final StocksService _stocksService = StocksService();
 
@@ -86,11 +84,19 @@ class StocksController extends GetxController {
   }
 
   updateSearchStatus(bool val) {
+    // stockStream();
+    // StreamController().stream
+
     isSearch.value = val;
     update();
   }
 
   updateCurrencySelected(String val) {
+    if (val == "USD") {
+      currencySelectedSymbol.value = "\$";
+    } else if (val == "PHP") {
+      currencySelectedSymbol.value = "P";
+    }
     currencySelected.value = val;
     update();
   }
