@@ -52,7 +52,7 @@ class StocksController extends GetxController {
   @override
   Stream<Stocks> stockStream() async* {
     while (isStreamOn.value == true) {
-      await Future.delayed(Duration(milliseconds: 5000));
+      await Future.delayed(Duration(milliseconds: 1000));
       try {
         var response = await _stocksService.getStocks(
             selectedCurrency: currencySelected.value);
@@ -101,7 +101,7 @@ class StocksController extends GetxController {
     update();
   }
 
-  void _getAllProducts() async {
+  void getAllProducts() async {
     var stocks = await _stocksService.getStocks();
     var result = json.decode(stocks.body);
 
