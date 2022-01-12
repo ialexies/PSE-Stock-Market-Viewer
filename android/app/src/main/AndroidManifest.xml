@@ -2,7 +2,7 @@
     package="com.digitapps.pse.getx_stocks_pse">
    <application
         android:label="getx_stocks_pse"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

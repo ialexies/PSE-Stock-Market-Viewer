@@ -5,6 +5,6 @@ class StockHistoryService {
 
   getStockHistoryAll(tickerSymbol) async {
     // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
-    return await repository.httpGetStockHistory(tickerSymbol: tickerSymbol);
+    return await repository.httpGetStockHistory(api: tickerSymbol);
   }
 }

@@ -12,9 +12,6 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class StocksController extends GetxController {
-  //TODO: Implement StocksController
-
-  // final count = 0.obs;
   var stockList = <Stocks>[].obs;
   List<Stocks> stockListFiltered = <Stocks>[].obs;
   var stockStreamController = StreamController<Stocks>().obs;
@@ -24,7 +21,19 @@ class StocksController extends GetxController {
   var searchType = "Company Name".obs;
   var isSearch = false.obs;
   var searchText = "".obs;
-  var currencies = <String>['USD', 'PHP'].obs;
+  var currencies = <String>[
+    "btc",
+    "eth",
+    "ltc",
+    "usd",
+    "aud",
+    "eur",
+    "gbp",
+    "hkd",
+    "jpy",
+    "php",
+    "sgd",
+  ].obs;
   var currenciesSymbols = <String>['\$', 'Php'].obs;
   var currencySelected = "USD".obs;
   var currencySelectedSymbol = "\$".obs;
@@ -33,8 +42,6 @@ class StocksController extends GetxController {
 
   @override
   void onInit() {
-    // fetchStocks();
-    // _getAllProducts();
     stockStreamController.value.addStream(stockStream());
     super.onInit();
   }
@@ -58,44 +65,39 @@ class StocksController extends GetxController {
             selectedCurrency: currencySelected.value);
         var result = json.decode(response.body);
         List<Stocks> tempStockList = [];
-        // print(result);
+
         result.forEach((data) {
-          // stockList.add(Stocks.fromJson(data));
           tempStockList.add(Stocks.fromJson(data));
         });
         stockList.value = tempStockList;
-        // stocks.value = currentStocks;
+
         isLoading.value = false;
-        // stockListFiltered = await stockList;
-        // isSearch.value ?? searchFilter("z");
+
         if (isSearch.value == true && searchText.value != "") {
           searchFilter(searchText.value);
         } else if (isSearch.value == false && searchText.value == "") {
-          // searchFilter(searchText.value);
           stockListFiltered = stockList;
         } else {
           stockListFiltered = stockList;
         }
-        // searchFilter("z");
-      } catch (e) {
-        // isLoading.value = true;
-      }
+      } catch (e) {}
     }
   }
 
   updateSearchStatus(bool val) {
-    // stockStream();
-    // StreamController().stream
 
     isSearch.value = val;
     update();
   }
 
   updateCurrencySelected(String val) {
-    if (val == "USD") {
+    val = val.toUpperCase();
+    if (val == "USD".toUpperCase()) {
       currencySelectedSymbol.value = "\$";
     } else if (val == "PHP") {
-      currencySelectedSymbol.value = "P";
+      currencySelectedSymbol.value = "Php";
+    } else {
+      currencySelectedSymbol.value = val.toUpperCase();
     }
     currencySelected.value = val;
     update();
@@ -118,7 +120,8 @@ class StocksController extends GetxController {
     List<Stocks> filteredResult = [];
 
     filteredResult = tempStockAll
-        .where((stock) => stock.companyName!
+        .where((stock) =>
+            stock.name!
             .toLowerCase()
             .contains(q.toString().toLowerCase()))
         .toList();

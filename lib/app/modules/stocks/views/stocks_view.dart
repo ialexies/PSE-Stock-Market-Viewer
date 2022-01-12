@@ -69,7 +69,7 @@ class StocksView extends GetView<StocksController> {
                   items: controller.currencies
                       .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
-                        value: value,
+                        value: value.toUpperCase(),
                         child: Text(
                           value,
                           // style: TextStyle(color: Colors.red),
@@ -91,17 +91,24 @@ class StocksView extends GetView<StocksController> {
                           return Container(
                             // padding: EdgeInsets.all(value),
                             child: ListTile(
+                              // isThreeLine: true,
+                     
                               onTap: () {
-                                // print(controller.stockList[index].tickerSymbol);
-                                // Get.toNamed(Routes.STOCK, parameters:controller.stockList[index] );
+                                print(controller.stockList[index].id);
                                 // Get.toNamed(Routes.STOCK,
-                                //     parameters:
+                                //     parameters: controller.stockList[index]);
+                                // Get.toNamed(Routes.STOCK,
+                                //     arguments:
                                 //         toMap(controller.stockList[index]));
+                                Get.toNamed(Routes.STOCK,
+                                    arguments: controller.stockList[index]);
                               },
                               leading: Padding(
                                 padding: const EdgeInsets.all(.0),
                                 child: Image.network(
-                                    '${controller.stockListFiltered[index].img}'),
+                                  '${controller.stockListFiltered[index].img}',
+                                  width: 50,
+                                ),
                               ),
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +117,7 @@ class StocksView extends GetView<StocksController> {
                                     TextSpan(children: [
                                       TextSpan(
                                         text:
-                                            '${controller.stockListFiltered[index].tickerSymbol}'
+                                            '${controller.stockListFiltered[index].symbol}'
                                                 .toUpperCase(),
                                         style: TextStyle(
                                             color: Colors.grey[800],
@@ -122,7 +129,7 @@ class StocksView extends GetView<StocksController> {
                                             color: Colors.black,
                                           ),
                                           text:
-                                              '- ${controller.stockListFiltered[index].companyName}'
+                                              '- ${controller.stockListFiltered[index].name}'
                                                   .toUpperCase()),
                                     ]),
                                     minFontSize: 4,
@@ -145,6 +152,7 @@ class StocksView extends GetView<StocksController> {
                                 ],
                               ),
                               trailing: Container(
+                                // width: ,
                                 height: double.infinity,
                                 decoration: BoxDecoration(
                                     border: Border(left: BorderSide(width: 1))),
@@ -167,8 +175,10 @@ class StocksView extends GetView<StocksController> {
                                                 fontSize: 10,
                                                 color: Colors.black,
                                               ),
+                                              // text:
+                                              //     '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].price)}',
                                               text:
-                                                  '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].price)}',
+                                                  '${controller.currencySelectedSymbol.value} ${decimalFormatter.format(controller.stockListFiltered[index].price)}',
                                             ),
                                             TextSpan(text: ' '),
                                             TextSpan(
@@ -254,8 +264,8 @@ class StocksView extends GetView<StocksController> {
 
   toMap(Stocks stocks) {
     var map = Map<String, String>();
-    map['tickerSymbol'] = stocks.tickerSymbol.toString();
-    map['companyName'] = stocks.companyName.toString();
+    map['tickerSymbol'] = stocks.symbol.toString();
+    map['cryptoName'] = stocks.name.toString();
     map['price'] = stocks.price.toString();
     map['high24h'] = stocks.high24h.toString();
     map['low24h'] = stocks.low24h.toString();

@@ -30,16 +30,33 @@ class Repository {
   }
 
   httpGetStock({required String api}) async {
-    return await http.get(Uri.parse(_baseUrl2 + "/api" + api));
+    // return await http.get(Uri.parse(_baseUrl + "/api/v3/" + api.toLowerCase()));
+    api = "/api/v3/coins/bitcoin";
+    return await http.get(Uri.https(_baseUrl, api));
   }
 
-  httpGetStockHistory({required String tickerSymbol}) async {
+  httpGetStockHistory({required String api}) async {
     final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('yyyy-MM-dd');
-    final String dateFormatted = formatter.format(now);
-    return await http.get(Uri.parse(
-        "https://pselookup.vrymel.com/api/stocks/${tickerSymbol}/history/2021-01-19/${dateFormatted}"));
+    print(_baseUrl + api);
+
+    Map<String, String> qParams = {
+      // 'vs_currency': '$selectedCurrency',
+      'vs_currency': 'php',
+      'from': '1392577232',
+      'to': '1422577232',
+    };
+    http.Response result = await http.get(Uri.https(_baseUrl, api, qParams));
+    print(result);
+    return result;
   }
+
+  // httpGetStockHistory({required String tickerSymbol}) async {
+  //   final DateTime now = DateTime.now();
+  //   final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  //   final String dateFormatted = formatter.format(now);
+  //   return await http.get(Uri.parse(
+  //       "https://pselookup.vrymel.com/api/stocks/${tickerSymbol}/history/2021-01-19/${dateFormatted}"));
+  // }
 
   getBaseUrl() {
     return _baseUrl;

@@ -1,6 +1,7 @@
 class Stocks {
-  String? tickerSymbol;
-  String? companyName;
+  String? id;
+  String? symbol;
+  String? name;
   double? price;
   String? img;
   String? marketCap;
@@ -26,8 +27,9 @@ class Stocks {
   String? lastUpdated;
 
   Stocks({
-    this.tickerSymbol,
-    this.companyName,
+    this.id,
+    this.symbol,
+    this.name,
     this.price,
     this.high24h,
     this.low24h,
@@ -40,8 +42,9 @@ class Stocks {
   // US Stocks
   factory Stocks.fromJson(Map<String, dynamic> json) {
     return Stocks(
-      tickerSymbol: json['symbol'],
-      companyName: json['name'],
+      id: json['id'],
+      symbol: json['symbol'],
+      name: json['name'],
       price: json['current_price'].toDouble(),
       high24h: json['high_24h'].toDouble(),
       low24h: json['low_24h'].toDouble(),
@@ -54,8 +57,12 @@ class Stocks {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['ticker_symbol'] = tickerSymbol;
-    data['company_name'] = companyName;
+    data['symbol'] = symbol;
+    data['name'] = name;
     return data;
   }
+
+
+
+  
 }
