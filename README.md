@@ -1,4 +1,4 @@
-# getx_stocks_pse
+# cryptos
 
 A new Flutter project.
 

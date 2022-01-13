@@ -1,5 +1,5 @@
 // import 'package:get/get.dart';
-// import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
+// import 'package:cryptos/app/data/models/stock_model.dart';
 
 // class StockProvider extends GetConnect {
 //   @override

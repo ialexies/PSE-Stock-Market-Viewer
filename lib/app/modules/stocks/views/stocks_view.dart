@@ -5,9 +5,9 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
-import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
-import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
-import 'package:getx_stocks_pse/app/routes/app_pages.dart';
+import 'package:cryptos/app/data/assets/styles/text_styles.dart';
+import 'package:cryptos/app/data/models/stocks_model.dart';
+import 'package:cryptos/app/routes/app_pages.dart';
 
 import '../controllers/stocks_controller.dart';
 import 'package:intl/intl.dart' as intl;

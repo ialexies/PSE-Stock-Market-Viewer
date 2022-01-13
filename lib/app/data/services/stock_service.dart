@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:getx_stocks_pse/app/data/repository/repository.dart';
+import 'package:cryptos/app/data/repository/repository.dart';
 
 import '../models/stock_history.dart';
 

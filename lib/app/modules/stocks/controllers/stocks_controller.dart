@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
-// import 'package:getx_stocks_pse/app/data/providers/stock_provider.dart';
-import 'package:getx_stocks_pse/app/data/services/stocks_service.dart';
-import 'package:getx_stocks_pse/app/modules/stock/controllers/stock_controller.dart';
+import 'package:cryptos/app/data/models/stocks_model.dart';
+// import 'package:cryptos/app/data/providers/stock_provider.dart';
+import 'package:cryptos/app/data/services/stocks_service.dart';
+import 'package:cryptos/app/modules/stock/controllers/stock_controller.dart';
 import 'dart:convert';
 
 import 'package:intl/intl.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:getx_stocks_pse/app/modules/stocks/controllers/stocks_controller.dart';
+import 'package:cryptos/app/modules/stocks/controllers/stocks_controller.dart';
 
 // import 'package:';
 

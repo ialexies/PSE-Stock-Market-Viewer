@@ -31,7 +31,7 @@ class Repository {
 
   httpGetStock({required String api}) async {
     // return await http.get(Uri.parse(_baseUrl + "/api/v3/" + api.toLowerCase()));
-    api = "/api/v3/coins/bitcoin";
+    api = "/api/v3/$api";
     return await http.get(Uri.https(_baseUrl, api));
   }
 

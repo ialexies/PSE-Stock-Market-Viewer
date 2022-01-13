@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
-import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
-import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
-import 'package:getx_stocks_pse/app/modules/stocks/controllers/stocks_controller.dart';
+import 'package:cryptos/app/data/models/stock_history.dart';
+import 'package:cryptos/app/data/models/stock_model.dart';
+import 'package:cryptos/app/modules/stocks/controllers/stocks_controller.dart';
 
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -12,32 +13,34 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../controllers/stock_controller.dart';
 import 'package:intl/intl.dart' as intl;
 
+
 class StockView extends GetView<StockController> {
   StocksController stocksControlller = Get.put(StocksController());
   final decimalFormatter = intl.NumberFormat.decimalPattern();
 
   @override
   Widget build(BuildContext context) {
-    
+    // print('fdfdf');
+
+    this.controller.getStockInfoMore(Get.arguments);
+
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: FittedBox(
-              fit: BoxFit.fill,
-              child: Image.network(
-                '${controller.stockInfo.value.img}',
-                width: 40,
-              ),
-            ),
-            // title: Text(Get.arguments.toString()),
+            // title: CircleAvatar(
+            //   backgroundImage: NetworkImage(
+            //     '${controller.stockInfo.value.img}',
+            //   ),
+            // ),
+            title: Text('${controller.stockInfo.value.name.toUpperCase()}'),
             centerTitle: true,
           ),
           body: Center(
             child: Container(
+                padding: EdgeInsets.all(30),
                 child: ListView(
               children: [
                 // SafeArea(
-                //     child: SfCartesianChart(
-
+                    //     child: SfCartesianChart(
                 //         zoomPanBehavior: controller.zoomPanBehavior.value,
                 //         // backgroundColor: Colors.amberAccent[50],
                 //         primaryXAxis:) DateTimeAxis(),
@@ -88,63 +91,24 @@ class StockView extends GetView<StockController> {
                 //           yValueMapper: (StockHistory stockHistory, _) =>
                 //               stockHistory.close)
                 //     ])),
-                      Column(
-                        children: [
-                          Divider(),
-                          ListTile(
-                            leading: Column(
-                              children: [
-                                Text(
-                                    '${controller.stockInfo.value.symbol} ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30)),
-                          Text(
-                              '(${stocksControlller.currencySelectedSymbol} ${decimalFormatter.format(controller.stockInfo.value.price)})',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15)),
-                              ],
-                            ),
-                            title: Text(
-                        '${controller.stockInfo.value.name}',
-                       
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                    Column(
+                      children: [
+                        Divider(),
+                        ListTile(
+                          leading: Image(
+                              image: NetworkImage(
+                            '${controller.stockInfo.value.img}',
+                          )),
+                          title: Text(
+                            '${controller.stockInfo.value.name.toUpperCase()}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                           RichText(
-                              text: TextSpan(
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                  ),
-                                  children: [
-                                TextSpan(
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    // fontSize: 14,
-                                  ),
-                                  text: 'Price: ',
-                                  //   textAlign: TextAlign.left,
-                                ),
-                                TextSpan(
-                                  text:
-                                      '${stocksControlller.currencySelected.value} ${decimalFormatter.format(controller.stockInfo.value.price)} ',
-                                  //   textAlign: TextAlign.left,
-                                ),
-                                TextSpan()
-                              ])),
-                          // Text(
-                          //   'Price: ${stocksControlller.currencySelected.value} ',
-                          //   textAlign: TextAlign.left,
-                          // ),
-                          // Text(
-                          //   '${decimalFormatter.format(controller.stockInfo.value.price)}  ',
-                          //   textAlign: TextAlign.left,
-                          // ),
+                                text: textFormat_BoldNormal(),
+                              ),
                           Text(
                               '24H High: ${stocksControlller.currencySelected.value} ${decimalFormatter.format(controller.stockInfo.value.high24h)}'),
                           Text(
@@ -153,29 +117,89 @@ class StockView extends GetView<StockController> {
                               'Volume: ${controller.stockInfo.value.totalVolume}'),
                           // Text(
                           //     'Timestamp: ${controller.stockInfo.value.atlDate.toString()}'),
-                              ],
-                            ),
-                            // subtitle: Wrap(
-                            //   // mainAxisSize: MainAxisSize.max,
-                            //   children: [
-                            //     Text(
-                            //         'Low : Php ${snapshot.data?.price?["close"]}'),
-                            //     Text(
-                            //         'Open : Php ${snapshot.data?.price?["open"]}'),
-                            //     Text(
-                            //         'Close : Php ${snapshot.data?.price?["close"]}'),
-                            //     Text(
-                            //         'High : Php ${snapshot.data?.price?["high"]}'),
-                            //   ],
-                            // ),
+                            ],
                           ),
+                          // subtitle: Wrap(
+                          //   // mainAxisSize: MainAxisSize.max,
+                          //   children: [
+                          //     Text(
+                          //         'Low : Php ${snapshot.data?.price?["close"]}'),
+                          //     Text(
+                          //         'Open : Php ${snapshot.data?.price?["open"]}'),
+                          //     Text(
+                          //         'Close : Php ${snapshot.data?.price?["close"]}'),
+                          //     Text(
+                          //         'High : Php ${snapshot.data?.price?["high"]}'),
+                          //   ],
+                          // ),
+                        ),
+                      ],
+                    ),
+                    // ignore: unnecessary_null_comparison
+                    Divider(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.black87,
+                            width: .2,
+                            style: BorderStyle.solid),
+                      ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              'Descryption',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          controller.stockInfoMore.value.descryption != null
+                              ? Html(
+                                  data: controller
+                                      .stockInfoMore.value.descryption)
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CircularProgressIndicator(),
+                                  ],
+                                ),
                         ],
                       ),
-                    ],
-            )
-              
-        ),
-      ),
+                    ),
+
+                    // Text('${controller.stockInfoMore.value.descryption}')
+                  ],
+                )),
+          ),
         ));
+  }
+
+  TextSpan textFormat_BoldNormal() {
+    return TextSpan(
+        style: TextStyle(
+          fontWeight: FontWeight.normal,
+          fontSize: 12,
+          color: Colors.black,
+        ),
+        children: [
+          TextSpan(
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              // fontSize: 14,
+            ),
+            text: 'Price: ',
+            //   textAlign: TextAlign.left,
+          ),
+          TextSpan(
+            text:
+                '${stocksControlller.currencySelected.value} ${decimalFormatter.format(controller.stockInfo.value.price)} ',
+            //   textAlign: TextAlign.left,
+          ),
+          TextSpan()
+        ]);
   }
 }

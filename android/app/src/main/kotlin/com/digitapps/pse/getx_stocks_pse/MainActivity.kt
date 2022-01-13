@@ -1,4 +1,4 @@
-package com.digitapps.pse.getx_stocks_pse
+package com.digitapps.pse.cryptos
 
 import io.flutter.embedding.android.FlutterActivity
 
