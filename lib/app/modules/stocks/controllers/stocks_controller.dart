@@ -121,7 +121,7 @@ class StocksController extends GetxController {
 
     filteredResult = tempStockAll
         .where((stock) =>
-            stock.name!
+            stock.name
             .toLowerCase()
             .contains(q.toString().toLowerCase()))
         .toList();

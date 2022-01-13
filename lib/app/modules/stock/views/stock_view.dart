@@ -4,19 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
 import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
+import 'package:getx_stocks_pse/app/modules/stocks/controllers/stocks_controller.dart';
 
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../controllers/stock_controller.dart';
+import 'package:intl/intl.dart' as intl;
 
 class StockView extends GetView<StockController> {
+  StocksController stocksControlller = Get.put(StocksController());
+  final decimalFormatter = intl.NumberFormat.decimalPattern();
+
   @override
   Widget build(BuildContext context) {
     
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: Text(Get.arguments.name),
+            title: FittedBox(
+              fit: BoxFit.fill,
+              child: Image.network(
+                '${controller.stockInfo.value.img}',
+                width: 40,
+              ),
+            ),
             // title: Text(Get.arguments.toString()),
             centerTitle: true,
           ),
@@ -88,7 +99,8 @@ class StockView extends GetView<StockController> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 30)),
-                          Text('(${controller.stockInfo.value.price})',
+                          Text(
+                              '(${stocksControlller.currencySelectedSymbol} ${decimalFormatter.format(controller.stockInfo.value.price)})',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15)),
@@ -102,16 +114,45 @@ class StockView extends GetView<StockController> {
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                          RichText(
+                              text: TextSpan(
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                  ),
+                                  children: [
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    // fontSize: 14,
+                                  ),
+                                  text: 'Price: ',
+                                  //   textAlign: TextAlign.left,
+                                ),
+                                TextSpan(
+                                  text:
+                                      '${stocksControlller.currencySelected.value} ${decimalFormatter.format(controller.stockInfo.value.price)} ',
+                                  //   textAlign: TextAlign.left,
+                                ),
+                                TextSpan()
+                              ])),
+                          // Text(
+                          //   'Price: ${stocksControlller.currencySelected.value} ',
+                          //   textAlign: TextAlign.left,
+                          // ),
+                          // Text(
+                          //   '${decimalFormatter.format(controller.stockInfo.value.price)}  ',
+                          //   textAlign: TextAlign.left,
+                          // ),
                           Text(
-                            'Open: Php ${controller.stockInfo.value.price} Close: Php ${controller.stockInfo.value.price}  ',
-                            textAlign: TextAlign.left,
-                          ),
+                              '24H High: ${stocksControlller.currencySelected.value} ${decimalFormatter.format(controller.stockInfo.value.high24h)}'),
                           Text(
-                              'High: Php ${controller.stockInfo.value.high24h} Low: Php ${controller.stockInfo.value.low24h}  '),
+                              '24H Low: ${stocksControlller.currencySelected.value} ${decimalFormatter.format(controller.stockInfo.value.low24h)}  '),
                           Text(
                               'Volume: ${controller.stockInfo.value.totalVolume}'),
-                          Text(
-                              'Timestamp: ${controller.stockInfo.value.lastUpdated}'),
+                          // Text(
+                          //     'Timestamp: ${controller.stockInfo.value.atlDate.toString()}'),
                               ],
                             ),
                             // subtitle: Wrap(

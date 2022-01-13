@@ -1,7 +1,7 @@
 class Stocks {
-  String? id;
+  String id;
   String? symbol;
-  String? name;
+  String name;
   double? price;
   String? img;
   String? marketCap;
@@ -27,9 +27,9 @@ class Stocks {
   String? lastUpdated;
 
   Stocks({
-    this.id,
+    this.id = "Crypto Name",
     this.symbol,
-    this.name,
+    this.name = "Crypto Name",
     this.price,
     this.high24h,
     this.low24h,

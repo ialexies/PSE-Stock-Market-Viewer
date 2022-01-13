@@ -89,17 +89,10 @@ class StocksView extends GetView<StocksController> {
                         itemCount: controller.stockListFiltered.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            // padding: EdgeInsets.all(value),
                             child: ListTile(
                               // isThreeLine: true,
-                     
                               onTap: () {
                                 print(controller.stockList[index].id);
-                                // Get.toNamed(Routes.STOCK,
-                                //     parameters: controller.stockList[index]);
-                                // Get.toNamed(Routes.STOCK,
-                                //     arguments:
-                                //         toMap(controller.stockList[index]));
                                 Get.toNamed(Routes.STOCK,
                                     arguments: controller.stockList[index]);
                               },
