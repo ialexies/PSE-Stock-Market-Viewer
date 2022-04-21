@@ -3,9 +3,10 @@ import 'package:intl/intl.dart';
 
 class Repository {
   // String _baseUrl_pseLookup = "https://pselookup.vrymel.com/api/stocks/";
-  String _baseUrl2 = "https://pselookup.vrymel.com";
+  // String _baseUrl2 = "https://pselookup.vrymel.com";
   // String _baseUrl = "http://phisix-api4.appspot.com/stocks.json";
   String _baseUrl = "api.coingecko.com";
+  String _apiVersion = "v3";
 
   httpGetStocks({required String api, String selectedCurrency = "USD"}) async {
     // return await http.get(Uri.parse(_baseUrl + "/api" + api));
@@ -18,8 +19,8 @@ class Repository {
       'page': '1',
       'sparkline': 'false',
     };
-
-    api = "/api/v3/coins/markets";
+    api = "/api/$_apiVersion/coins/markets";
+    // api = "/api/$_apiVersion/coins/markets";
 
     final uri = Uri.https(
       _baseUrl,
@@ -29,8 +30,11 @@ class Repository {
     return await http.get(uri);
   }
 
-  httpGetStock({required String api}) async {
-    return await http.get(Uri.parse(_baseUrl2 + "/api" + api));
+  httpGetStock({required String api, required String symbol}) async {
+    // api = "/api/$_apiVersion/$api/";
+    // return await http.get(Uri.parse(_baseUrl + api + symbol));
+    String final_api = 'https://$_baseUrl/api/$_apiVersion/$api/bitcoin';
+    return await http.get(Uri.parse(final_api));
   }
 
   httpGetStockHistory({required String tickerSymbol}) async {

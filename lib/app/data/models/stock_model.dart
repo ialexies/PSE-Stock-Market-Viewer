@@ -2,16 +2,21 @@ class Stock {
   String? tickerSymbol;
   String? companyName;
   String? status;
-  Map<String, dynamic>? price;
+  // Map<String, dynamic>? price;
+  String? price;
+  String? img;
 
-  Stock({this.tickerSymbol, this.companyName, this.status, this.price});
+  Stock(
+      {this.tickerSymbol, this.companyName, this.status, this.price, this.img});
 
   factory Stock.fromJson(Map<String, dynamic> jsonData) {
     return Stock(
-        tickerSymbol: jsonData['ticker_symbol'],
-        companyName: jsonData['company_name'],
-        status: jsonData['status'],
-        price: jsonData['price']);
+      tickerSymbol: jsonData['tickerSymbol'],
+      companyName: jsonData['companyName'],
+      status: jsonData['status'],
+      price: jsonData['price'],
+      img: jsonData['img'],
+    );
     // price: pricetoStockPrice(
     // jsonData['price']["date"],
     // jsonData['price']["low"],

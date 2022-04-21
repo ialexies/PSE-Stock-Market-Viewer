@@ -15,13 +15,13 @@ class StockView extends GetView<StockController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Get.arguments["tickerSymbol"]),
+        // title: Text(Get.arguments["tickerSymbol"]),
         centerTitle: true,
       ),
       body: Center(
         child: Container(
           child: FutureBuilder<Stock>(
-              future: controller.getStockInfo(Get.arguments["tickerSymbol"]),
+              future: controller.getStockInfo(Get.parameters['tickerSymbol']),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return CircularProgressIndicator();
@@ -94,10 +94,10 @@ class StockView extends GetView<StockController> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 30)),
-                                Text('(${snapshot.data?.price?["close"]})',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15)),
+                                // Text('(${snapshot.data?.price?["close"]})',
+                                //     style: TextStyle(
+                                //         fontWeight: FontWeight.bold,
+                                //         fontSize: 15)),
                               ],
                             ),
                             title: Text(
@@ -108,15 +108,15 @@ class StockView extends GetView<StockController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Open: Php ${snapshot.data?.price?["open"]} Close: Php ${snapshot.data?.price?["close"]}  ',
+                                  'Open: Php ${snapshot.data?.price} Close: Php ${snapshot.data?.price}  ',
                                   textAlign: TextAlign.left,
                                 ),
-                                Text(
-                                    'High: Php ${snapshot.data?.price?["high"]} Low: Php ${snapshot.data?.price?["low"]}  '),
-                                Text(
-                                    'Volume: ${snapshot.data?.price?["volume"]}'),
-                                Text(
-                                    'Timestamp: ${snapshot.data?.price?["timestamp"]}'),
+                                // Text(
+                                //     'High: Php ${snapshot.data?.price?["high"]} Low: Php ${snapshot.data?.price?["low"]}  '),
+                                // Text(
+                                //     'Volume: ${snapshot.data?.price?["volume"]}'),
+                                // Text(
+                                //     'Timestamp: ${snapshot.data?.price?["timestamp"]}'),
                               ],
                             ),
                             // subtitle: Wrap(

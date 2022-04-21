@@ -52,10 +52,18 @@ class Stocks {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['ticker_symbol'] = tickerSymbol;
-    data['company_name'] = companyName;
+  Map<String, String> toJson() {
+    final data = <String, String>{};
+    data['tickerSymbol'] = tickerSymbol.toString();
+    data['companyName'] = companyName.toString();
+    data['price'] = price.toString();
+    data['high24h'] = high24h.toString();
+    data['low24h'] = low24h.toString();
+    data['priceChangePercentage24h'] = priceChangePercentage24h.toString();
+    data['img'] = img.toString();
+    data['marketCap'] = marketCap.toString();
+    data['totalVolume'] = totalVolume.toString();
+
     return data;
   }
 }

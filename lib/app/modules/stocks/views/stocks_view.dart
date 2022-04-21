@@ -6,9 +6,10 @@ import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
+import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
 import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../controllers/stocks_controller.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -21,63 +22,124 @@ class StocksView extends GetView<StocksController> {
   Widget build(BuildContext context) {
     // String dropdownValue = currencies[0];
     return Scaffold(
-      appBar: AppBar(
-        title: Text('CRYPTOS'),
-        centerTitle: true,
-        actions: [
-          Obx(() => Container(
-                margin: EdgeInsets.all(10),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white, width: .5),
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.blue[600],
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: Offset(3, 3), // changes position of shadow
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(460.h),
+        child: Column(
+          children: [
+            AppBar(
+              title: Text('CRYPTOS'),
+              centerTitle: true,
+              actions: [
+                Obx(() => Container(
+                      margin: EdgeInsets.all(10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white, width: .5),
+                          borderRadius: BorderRadius.circular(30.r),
+                          color: Colors.blue[600],
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset:
+                                  Offset(3, 3), // changes position of shadow
+                            ),
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.2),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset:
+                                  Offset(-2, -2), // changes position of shadow
+                            ),
+                          ]),
+                      child: DropdownButton<String>(
+                        borderRadius: BorderRadius.circular(10.r),
+                        value: controller.currencySelected.value,
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 18,
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.white),
+                        iconDisabledColor: Colors.green,
+                        // hint: Text('Select Item'),
+                        dropdownColor: Colors.blue[600],
+                        iconEnabledColor: Colors.yellow,
+                        underline: SizedBox(
+                            // height: 2,
+                            // color: Colors.deepPurpleAccent,
+                            ),
+                        onChanged: (String? newValue) {
+                          controller.isLoading(true);
+                          controller.updateCurrencySelected(newValue!);
+                        },
+                        // items:
+                        items: controller.currencies
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                // style: TextStyle(color: Colors.red),
+                              ));
+                        }).toList(),
                       ),
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: Offset(-2, -2), // changes position of shadow
-                      ),
-                    ]),
-                child: DropdownButton<String>(
-                  borderRadius: BorderRadius.circular(10),
-                  value: controller.currencySelected.value,
-                  icon: const Icon(Icons.arrow_downward),
-                  iconSize: 18,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.white),
-                  iconDisabledColor: Colors.green,
-                  // hint: Text('Select Item'),
-                  dropdownColor: Colors.blue[600],
-                  iconEnabledColor: Colors.yellow,
-                  underline: SizedBox(
-                      // height: 2,
-                      // color: Colors.deepPurpleAccent,
-                      ),
-                  onChanged: (String? newValue) {
-                    controller.isLoading(true);
-                    controller.updateCurrencySelected(newValue!);
-                  },
-                  // items:
-                  items: controller.currencies
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          // style: TextStyle(color: Colors.red),
-                        ));
-                  }).toList(),
-                ),
-              )),
-        ],
+                    )),
+              ],
+            ),
+            Container(
+              color: Colors.amber,
+              padding: EdgeInsets.fromLTRB(30.h, 50.h, 30.h, 10.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 150.h,
+                    child: TextField(
+                      controller: searchTextController,
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          debugPrint('Something changed in Title Text Field');
+                          controller.isSearch(true);
+                          controller.searchText(searchTextController.text);
+                        } else {
+                          controller.isSearch(false);
+                        }
+                      },
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.search),
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: 'Search Here..',
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          labelStyle: TextStyle(color: Colors.amber),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 1.0),
+                              borderRadius: BorderRadius.circular(5.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 2.0),
+                              borderRadius: BorderRadius.circular(5.0)),
+                          border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 2.0),
+                              borderRadius: BorderRadius.circular(5.0))),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Text(
+                      '${controller.stockListFiltered.length.toString()} Found',
+                      style: TextStyle(fontSize: 30.sp, color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Obx(
@@ -92,16 +154,16 @@ class StocksView extends GetView<StocksController> {
                             // padding: EdgeInsets.all(value),
                             child: ListTile(
                               onTap: () {
-                                // print(controller.stockList[index].tickerSymbol);
-                                // Get.toNamed(Routes.STOCK, parameters:controller.stockList[index] );
-                                // Get.toNamed(Routes.STOCK,
-                                //     parameters:
-                                //         toMap(controller.stockList[index]));
+                                var stockData =
+                                    controller.stockList.value[index].toJson();
+                                Get.toNamed(Routes.STOCK,
+                                    parameters: stockData);
                               },
                               leading: Padding(
                                 padding: const EdgeInsets.all(.0),
                                 child: Image.network(
-                                    '${controller.stockListFiltered[index].img}'),
+                                    '${controller.stockListFiltered[index].img}',
+                                    width: 150.w),
                               ),
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,13 +175,16 @@ class StocksView extends GetView<StocksController> {
                                             '${controller.stockListFiltered[index].tickerSymbol}'
                                                 .toUpperCase(),
                                         style: TextStyle(
-                                            color: Colors.grey[800],
-                                            fontWeight: FontWeight.bold),
+                                          color: Colors.grey[800],
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 60.sp,
+                                        ),
                                       ),
                                       TextSpan(
                                           style: TextStyle(
                                             fontWeight: FontWeight.w300,
                                             color: Colors.black,
+                                            fontSize: 40.sp,
                                           ),
                                           text:
                                               '- ${controller.stockListFiltered[index].companyName}'
@@ -145,7 +210,8 @@ class StocksView extends GetView<StocksController> {
                                 ],
                               ),
                               trailing: Container(
-                                height: double.infinity,
+                                // height: double.infinity,
+                                // height: 300,
                                 decoration: BoxDecoration(
                                     border: Border(left: BorderSide(width: 1))),
                                 child: SizedBox(
@@ -212,43 +278,43 @@ class StocksView extends GetView<StocksController> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.search),
-        onPressed: () {
-          Get.defaultDialog(
-            contentPadding: EdgeInsets.all(20),
-            titlePadding: EdgeInsets.all(20),
-            onConfirm: () {
-              controller.isSearch(true);
-              controller.searchText(searchTextController.text);
-              Get.back();
-            },
-            onCancel: () {
-              controller.isSearch(false);
-              controller.searchText("");
-              Get.back();
-            },
-            textCancel: "Clear Search",
-            textConfirm: "Search",
-            title: "Search By Name",
-            content: Column(
-              children: [
-                TextField(
-                  controller: searchTextController,
-                  onChanged: (value) {
-                    debugPrint('Something changed in Title Text Field');
-                  },
-                  decoration: InputDecoration(
-                      labelText: 'Title',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0))),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.search),
+      //   onPressed: () {
+      //     Get.defaultDialog(
+      //       contentPadding: EdgeInsets.all(20),
+      //       titlePadding: EdgeInsets.all(20),
+      //       onConfirm: () {
+      //         controller.isSearch(true);
+      //         controller.searchText(searchTextController.text);
+      //         Get.back();
+      //       },
+      //       onCancel: () {
+      //         controller.isSearch(false);
+      //         controller.searchText("");
+      //         Get.back();
+      //       },
+      //       textCancel: "Clear Search",
+      //       textConfirm: "Search",
+      //       title: "Search By Name",
+      //       content: Column(
+      //         children: [
+      //           TextField(
+      //             controller: searchTextController,
+      //             onChanged: (value) {
+      //               debugPrint('Something changed in Title Text Field');
+      //             },
+      //             decoration: InputDecoration(
+      //                 labelText: 'Title',
+      //                 border: OutlineInputBorder(
+      //                     borderRadius: BorderRadius.circular(5.0))),
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 

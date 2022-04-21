@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/data/models/crypto_mode.dart';
 // import 'package:getx_stocks_pse/app/data/models/sales_data.dart';
 import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
 import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
@@ -19,7 +20,9 @@ class StockController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() {
-    getStockInfo(Get.arguments['tickerSymbol']);
+    var fetchStock = Stock.fromJson(Get.parameters);
+
+    getStockInfo(fetchStock.companyName);
 
     zoomPanBehavior.value = ZoomPanBehavior(
         // Enables pinch zooming
@@ -34,13 +37,17 @@ class StockController extends GetxController {
   }
 
   Future<Stock> getStockInfo(tickerSymbol) async {
-    var stock = await _stocksService.getStock(tickerSymbol);
-    var result = await json.decode(stock.body);
-
+    String api = "coins";
+    var stock = await _stocksService.getStock(api, tickerSymbol);
+    var response = await stock.body;
+    // var data = Crypto.fromJson(response);
+    // var data = Crypto.fromJson(response.toString());
+    // var crypto_data   = Crypto()
     // result["stocks"].forEach((data) async {
-    stock = await Stock.fromJson(result);
-    List<StockHistory>? stockHistory = await getStockHistory(tickerSymbol);
-    var stockInfo = await {"stock": stock, "stockHistory": stockHistory};
+    var decoded = json.decode(response);
+    var a = await Stock.fromJson(json.decode(response));
+    // List<StockHistory>? stockHistory = await getStockHistory(tickerSymbol);
+    // var stockInfo = await {"stock": stock, "stockHistory": stockHistory};
     // stock = result;
     // print(stock);
     // });
