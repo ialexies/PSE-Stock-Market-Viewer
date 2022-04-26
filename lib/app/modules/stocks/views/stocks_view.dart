@@ -116,6 +116,7 @@ class StocksView extends GetView<StocksController> {
                           debugPrint('Something changed in Title Text Field');
                           controller.isSearch(true);
                           controller.searchText(searchTextController.text);
+                          controller.requestStocksProvider();
                         } else {
                           controller.isSearch(false);
                         }

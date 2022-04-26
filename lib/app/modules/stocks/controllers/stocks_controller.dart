@@ -54,32 +54,33 @@ class StocksController extends GetxController {
     while (isStreamOn.value == true) {
       await Future.delayed(Duration(milliseconds: 2000));
       try {
-        var response = await _stocksService.getStocks(
-            selectedCurrency: currencySelected.value);
-        var result = json.decode(response.body);
-        List<Stocks> tempStockList = [];
-        // print(result);
-        result.forEach((data) {
-          // stockList.add(Stocks.fromJson(data));
-          tempStockList.add(Stocks.fromJson(data));
-        });
-        stockList.value = tempStockList;
-        // stocks.value = currentStocks;
-        isLoading.value = false;
-        // stockListFiltered = await stockList;
-        // isSearch.value ?? searchFilter("z");
-        if (isSearch.value == true && searchText.value != "") {
-          searchFilter(searchText.value);
-        } else if (isSearch.value == false && searchText.value == "") {
-          // searchFilter(searchText.value);
-          stockListFiltered = stockList;
-        } else {
-          stockListFiltered = stockList;
-        }
         // searchFilter("z");
+        requestStocksProvider();
       } catch (e) {
         // isLoading.value = true;
       }
+    }
+  }
+
+  requestStocksProvider() async {
+    var response = await _stocksService.getStocks(
+        selectedCurrency: currencySelected.value);
+    var result = json.decode(response.body);
+    List<Stocks> tempStockList = [];
+
+    result.forEach((data) {
+      tempStockList.add(Stocks.fromJson(data));
+    });
+    stockList.value = tempStockList;
+
+    isLoading.value = false;
+
+    if (isSearch.value == true && searchText.value != "") {
+      searchFilter(searchText.value);
+    } else if (isSearch.value == false && searchText.value == "") {
+      stockListFiltered = stockList;
+    } else {
+      stockListFiltered = stockList;
     }
   }
 
