@@ -88,7 +88,21 @@ class StocksView extends GetView<StocksController> {
               ],
             ),
             Container(
-              color: Colors.amber,
+              // color: Colors.grey.shade900,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    // Colors.blueGrey.shade700,
+                    // Colors.black,
+                    // Colors.black,
+                    Colors.grey.shade800,
+                    Colors.grey.shade600,
+                    // Colors.blue,
+                  ],
+                ),
+              ),
               padding: EdgeInsets.fromLTRB(30.h, 50.h, 30.h, 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,11 +133,11 @@ class StocksView extends GetView<StocksController> {
                               borderRadius: BorderRadius.circular(5.0)),
                           focusedBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: Colors.grey, width: 2.0),
+                                  color: Colors.blue, width: 2.0),
                               borderRadius: BorderRadius.circular(5.0)),
                           border: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                  color: Colors.grey, width: 2.0),
+                                  color: Colors.grey, width: 1.0),
                               borderRadius: BorderRadius.circular(5.0))),
                     ),
                   ),
@@ -151,7 +165,8 @@ class StocksView extends GetView<StocksController> {
                         itemCount: controller.stockListFiltered.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            // padding: EdgeInsets.all(value),
+                            padding: EdgeInsets.symmetric(vertical: 2),
+                            // height: 170.w,
                             child: ListTile(
                               onTap: () {
                                 var stockData =
@@ -163,7 +178,7 @@ class StocksView extends GetView<StocksController> {
                                 padding: const EdgeInsets.all(.0),
                                 child: Image.network(
                                     '${controller.stockListFiltered[index].img}',
-                                    width: 150.w),
+                                    width: 130.w),
                               ),
                               title: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +192,7 @@ class StocksView extends GetView<StocksController> {
                                         style: TextStyle(
                                           color: Colors.grey[800],
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 60.sp,
+                                          fontSize: 40.sp,
                                         ),
                                       ),
                                       TextSpan(
@@ -187,18 +202,12 @@ class StocksView extends GetView<StocksController> {
                                             fontSize: 40.sp,
                                           ),
                                           text:
-                                              '- ${controller.stockListFiltered[index].companyName}'
+                                              '-${controller.stockListFiltered[index].companyName}'
                                                   .toUpperCase()),
                                     ]),
                                     minFontSize: 4,
                                     style: TextStyle(fontSize: 16),
                                   ),
-                                ],
-                              ),
-                              subtitle: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
                                   Text(
                                     'Market Cap:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.stockListFiltered[index].marketCap.toString()))}',
                                     style: TextStyles().myStyleSubtitle(),
@@ -209,67 +218,75 @@ class StocksView extends GetView<StocksController> {
                                   ),
                                 ],
                               ),
-                              trailing: Container(
-                                // height: double.infinity,
-                                // height: 300,
-                                decoration: BoxDecoration(
-                                    border: Border(left: BorderSide(width: 1))),
-                                child: SizedBox(
-                                  width: 80,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        RichText(
-                                            text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 10,
-                                                color: Colors.black,
-                                              ),
-                                              text:
-                                                  '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].price)}',
-                                            ),
-                                            TextSpan(text: ' '),
-                                            TextSpan(
+                              trailing: Column(
+                                children: [
+                                  Container(
+                                    // height: double.infinity,
+                                    // height: 300,
+                                    width: 260.w,
+                                    decoration: BoxDecoration(
+                                        border:
+                                            Border(left: BorderSide(width: 1))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                              text: TextSpan(
+                                            children: [
+                                              TextSpan(
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 10,
-                                                  color: controller
-                                                              .stockList
-                                                              .value[index]
-                                                              .priceChangePercentage24h!
-                                                              .toDouble() >=
-                                                          1
-                                                      ? Colors.blue
-                                                      : Colors.red,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 30.sp,
+                                                  color: Colors.black,
                                                 ),
                                                 text:
-                                                    '${controller.stockListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
-                                          ],
-                                        )),
-                                        Text(
-                                          'High: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].high24h)}  ',
-                                          style: TextStyles()
-                                              .myStyleSubtitle()
-                                              .copyWith(fontSize: 9),
-                                        ),
-                                        Text(
-                                          'Low: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].low24h)} ',
-                                          style: TextStyles()
-                                              .myStyleSubtitle()
-                                              .copyWith(fontSize: 9),
-                                        ),
-                                      ],
+                                                    '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].price)}',
+                                                // '${controller.currencySelectedSymbol.value}${double.parse(controller.stockListFiltered[index].price?.toStringAsFixed() ?? "0")}',
+                                              ),
+                                              TextSpan(text: ' '),
+                                              TextSpan(
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 30.sp,
+                                                    color: controller
+                                                                .stockList
+                                                                .value[index]
+                                                                .priceChangePercentage24h!
+                                                                .toDouble() >=
+                                                            1
+                                                        ? Colors.blue
+                                                        : Colors.red,
+                                                  ),
+                                                  text:
+                                                      '${controller.stockListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
+                                            ],
+                                          )),
+                                          Text(
+                                            'High: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].high24h)}  ',
+                                            style: TextStyles()
+                                                .myStyleSubtitle()
+                                                .copyWith(
+                                                  fontSize: 25.sp,
+                                                ),
+                                          ),
+                                          Text(
+                                            'Low: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.stockListFiltered[index].low24h)} ',
+                                            style: TextStyles()
+                                                .myStyleSubtitle()
+                                                .copyWith(
+                                                  fontSize: 25.sp,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                           );
@@ -278,43 +295,6 @@ class StocksView extends GetView<StocksController> {
           ),
         ),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.search),
-      //   onPressed: () {
-      //     Get.defaultDialog(
-      //       contentPadding: EdgeInsets.all(20),
-      //       titlePadding: EdgeInsets.all(20),
-      //       onConfirm: () {
-      //         controller.isSearch(true);
-      //         controller.searchText(searchTextController.text);
-      //         Get.back();
-      //       },
-      //       onCancel: () {
-      //         controller.isSearch(false);
-      //         controller.searchText("");
-      //         Get.back();
-      //       },
-      //       textCancel: "Clear Search",
-      //       textConfirm: "Search",
-      //       title: "Search By Name",
-      //       content: Column(
-      //         children: [
-      //           TextField(
-      //             controller: searchTextController,
-      //             onChanged: (value) {
-      //               debugPrint('Something changed in Title Text Field');
-      //             },
-      //             decoration: InputDecoration(
-      //                 labelText: 'Title',
-      //                 border: OutlineInputBorder(
-      //                     borderRadius: BorderRadius.circular(5.0))),
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   },
-      // ),
     );
   }
 
