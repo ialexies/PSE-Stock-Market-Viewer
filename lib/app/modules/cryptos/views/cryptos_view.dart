@@ -1,13 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
-// import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
-import 'package:getx_stocks_pse/app/data/models/cryptos_model.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../controllers/cryptos_controller.dart';
@@ -16,11 +12,8 @@ import 'package:intl/intl.dart' as intl;
 class CryptosView extends GetView<CryptosController> {
   final decimalFormatter = intl.NumberFormat.decimalPattern();
 
-  // List<String> currencies = ['USD', 'PHP'];
-
   @override
   Widget build(BuildContext context) {
-    // String dropdownValue = currencies[0];
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(460.h),
@@ -88,18 +81,13 @@ class CryptosView extends GetView<CryptosController> {
               ],
             ),
             Container(
-              // color: Colors.grey.shade900,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    // Colors.blueGrey.shade700,
-                    // Colors.black,
-                    // Colors.black,
                     Colors.grey.shade800,
                     Colors.grey.shade600,
-                    // Colors.blue,
                   ],
                 ),
               ),
@@ -111,24 +99,13 @@ class CryptosView extends GetView<CryptosController> {
                     height: 150.h,
                     child: TextField(
                       controller: controller.searchTextController.value,
-                      onChanged: (value) {
-                        if (value.isNotEmpty) {
-                          debugPrint('Something changed in Title Text Field');
-                          controller.isSearch(true);
-                          controller.searchText(
-                              controller.searchTextController.value.text);
-                          controller.requestCryptosProvider();
-                        } else {
-                          controller.isSearch(false);
-                        }
-                      },
-                      onSubmitted: (value) {
-                        // print(value);
-                        controller.searchTextController.value.text = value;
-                        controller.requestCryptosProvider();
-                      },
+                      onChanged: (value) => controller.updateSearch(value),
+                      onSubmitted: (value) => controller.searchCryptos(value),
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.search),
+                          suffixIcon: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () => controller.clearSearch()),
                           filled: true,
                           fillColor: Colors.white,
                           labelText: 'Search Here..',
@@ -173,7 +150,6 @@ class CryptosView extends GetView<CryptosController> {
                         itemBuilder: (context, index) {
                           return Container(
                             padding: EdgeInsets.symmetric(vertical: 2),
-                            // height: 170.w,
                             child: ListTile(
                               onTap: () {
                                 var stockData =
@@ -303,20 +279,5 @@ class CryptosView extends GetView<CryptosController> {
         ),
       ),
     );
-  }
-
-  toMap(Cryptos cryptos) {
-    var map = Map<String, String>();
-    map['tickerSymbol'] = cryptos.tickerSymbol.toString();
-    map['companyName'] = cryptos.companyName.toString();
-    map['price'] = cryptos.price.toString();
-    map['high24h'] = cryptos.high24h.toString();
-    map['low24h'] = cryptos.low24h.toString();
-    map['priceChangePercentage24h'] =
-        cryptos.priceChangePercentage24h.toString();
-    map['img'] = cryptos.img.toString();
-    map['marketCap'] = cryptos.marketCap.toString();
-    map['totalVolume'] = cryptos.totalVolume.toString();
-    return map;
   }
 }

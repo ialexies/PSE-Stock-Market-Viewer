@@ -86,11 +86,30 @@ class CryptosController extends GetxController {
   }
 
   updateSearchStatus(bool val) {
-    // stockStream();
-    // StreamController().stream
-
     isSearch.value = val;
     update();
+  }
+
+  clearSearch() async {
+    searchTextController.value.text = "";
+    searchText(searchTextController.value.text);
+    requestCryptosProvider();
+  }
+
+  searchCryptos(String val) {
+    searchTextController.value.text = val;
+    requestCryptosProvider();
+  }
+
+  updateSearch(value) {
+    if (value.isNotEmpty) {
+      debugPrint('Something changed in Title Text Field');
+      isSearch(true);
+      searchText(searchTextController.value.text);
+      requestCryptosProvider();
+    } else {
+      isSearch(false);
+    }
   }
 
   updateCurrencySelected(String val) {
