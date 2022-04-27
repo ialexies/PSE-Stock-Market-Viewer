@@ -8,7 +8,7 @@ class Repository {
   String _baseUrl = "api.coingecko.com";
   String _apiVersion = "v3";
 
-  httpGetStocks({required String api, String selectedCurrency = "USD"}) async {
+  httpGetCryptos({required String api, String selectedCurrency = "USD"}) async {
     // return await http.get(Uri.parse(_baseUrl + "/api" + api));
 
     Map<String, String> qParams = {
@@ -30,7 +30,7 @@ class Repository {
     return await http.get(uri);
   }
 
-  httpGetStock({required String api, required String symbol}) async {
+  httpGetCrypto({required String api, required String symbol}) async {
     // api = "/api/$_apiVersion/$api/";
     // return await http.get(Uri.parse(_baseUrl + api + symbol));
     String final_api = 'https://$_baseUrl/api/$_apiVersion/$api/bitcoin';

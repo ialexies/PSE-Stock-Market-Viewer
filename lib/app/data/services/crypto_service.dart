@@ -6,6 +6,6 @@ class CryptoService {
   getCrypto(api, tickerSymbol) async {
     // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
     // return await repository.httpGetStock(api: "/stocks/${tickerSymbol}");
-    return await repository.httpGetStock(api: api, symbol: tickerSymbol);
+    return await repository.httpGetCrypto(api: api, symbol: tickerSymbol);
   }
 }

@@ -28,6 +28,7 @@ class CryptosController extends GetxController {
   var currenciesSymbols = <String>['\$', 'Php'].obs;
   var currencySelected = "USD".obs;
   var currencySelectedSymbol = "\$".obs;
+  var searchTextController = TextEditingController().obs;
 
   final CryptosService _stocksService = CryptosService();
 

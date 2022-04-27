@@ -15,7 +15,7 @@ import 'package:intl/intl.dart' as intl;
 
 class CryptosView extends GetView<CryptosController> {
   final decimalFormatter = intl.NumberFormat.decimalPattern();
-  TextEditingController searchTextController = TextEditingController();
+
   // List<String> currencies = ['USD', 'PHP'];
 
   @override
@@ -110,16 +110,22 @@ class CryptosView extends GetView<CryptosController> {
                   Container(
                     height: 150.h,
                     child: TextField(
-                      controller: searchTextController,
+                      controller: controller.searchTextController.value,
                       onChanged: (value) {
                         if (value.isNotEmpty) {
                           debugPrint('Something changed in Title Text Field');
                           controller.isSearch(true);
-                          controller.searchText(searchTextController.text);
+                          controller.searchText(
+                              controller.searchTextController.value.text);
                           controller.requestCryptosProvider();
                         } else {
                           controller.isSearch(false);
                         }
+                      },
+                      onSubmitted: (value) {
+                        // print(value);
+                        controller.searchTextController.value.text = value;
+                        controller.requestCryptosProvider();
                       },
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.search),

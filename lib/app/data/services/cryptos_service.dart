@@ -5,7 +5,7 @@ class CryptosService {
 
   getCryptos({selectedCurrency}) async {
     // print(selectedCurrency);
-    return await _repository.httpGetStocks(
+    return await _repository.httpGetCryptos(
         api: "/stocks", selectedCurrency: selectedCurrency);
   }
 }
