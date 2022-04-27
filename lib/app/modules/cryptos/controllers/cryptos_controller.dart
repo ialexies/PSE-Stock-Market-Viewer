@@ -3,23 +3,23 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
-// import 'package:getx_stocks_pse/app/data/providers/stock_provider.dart';
-import 'package:getx_stocks_pse/app/data/services/stocks_service.dart';
+import 'package:getx_stocks_pse/app/data/models/cryptos_model.dart';
+
+import 'package:getx_stocks_pse/app/data/services/cryptos_service.dart';
 // import 'package:getx_stocks_pse/app/modules/stock/controllers/stock_controller.dart';
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
 
-class StocksController extends GetxController {
-  //TODO: Implement StocksController
+class CryptosController extends GetxController {
+  //TODO: Implement CryptosController
 
   // final count = 0.obs;
-  var stockList = <Stocks>[].obs;
-  List<Stocks> stockListFiltered = <Stocks>[].obs;
-  var stockStreamController = StreamController<Stocks>().obs;
+  var stockList = <Cryptos>[].obs;
+  List<Cryptos> stockListFiltered = <Cryptos>[].obs;
+  var stockStreamController = StreamController<Cryptos>().obs;
   var isStreamOn = true.obs;
-  var stocks = Stocks().obs;
+  var stocks = Cryptos().obs;
   var isLoading = true.obs;
   var searchType = "Company Name".obs;
   var isSearch = false.obs;
@@ -29,11 +29,11 @@ class StocksController extends GetxController {
   var currencySelected = "USD".obs;
   var currencySelectedSymbol = "\$".obs;
 
-  final StocksService _stocksService = StocksService();
+  final CryptosService _stocksService = CryptosService();
 
   @override
   void onInit() {
-    // fetchStocks();
+    // fetchCryptos();
     // _getAllProducts();
     stockStreamController.value.addStream(stockStream());
     super.onInit();
@@ -50,26 +50,26 @@ class StocksController extends GetxController {
   void onClose() {}
 
   @override
-  Stream<Stocks> stockStream() async* {
+  Stream<Cryptos> stockStream() async* {
     while (isStreamOn.value == true) {
       await Future.delayed(Duration(milliseconds: 2000));
       try {
         // searchFilter("z");
-        requestStocksProvider();
+        requestCryptosProvider();
       } catch (e) {
         // isLoading.value = true;
       }
     }
   }
 
-  requestStocksProvider() async {
-    var response = await _stocksService.getStocks(
+  requestCryptosProvider() async {
+    var response = await _stocksService.getCryptos(
         selectedCurrency: currencySelected.value);
     var result = json.decode(response.body);
-    List<Stocks> tempStockList = [];
+    List<Cryptos> tempStockList = [];
 
     result.forEach((data) {
-      tempStockList.add(Stocks.fromJson(data));
+      tempStockList.add(Cryptos.fromJson(data));
     });
     stockList.value = tempStockList;
 
@@ -103,11 +103,11 @@ class StocksController extends GetxController {
   }
 
   void _getAllProducts() async {
-    var stocks = await _stocksService.getStocks();
+    var stocks = await _stocksService.getCryptos();
     var result = json.decode(stocks.body);
 
     result.forEach((data) {
-      stockList.add(Stocks.fromJson(data));
+      stockList.add(Cryptos.fromJson(data));
     });
     isLoading(false);
     stockListFiltered = await stockList;
@@ -115,8 +115,8 @@ class StocksController extends GetxController {
 
   void searchFilter(String q) async {
     // _getAllProducts();
-    List<Stocks> tempStockAll = await stockList;
-    List<Stocks> filteredResult = [];
+    List<Cryptos> tempStockAll = await stockList;
+    List<Cryptos> filteredResult = [];
 
     filteredResult = tempStockAll
         .where((stock) => stock.companyName!

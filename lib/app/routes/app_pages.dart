@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/modules/crypto/bindings/stock_binding.dart';
+import 'package:getx_stocks_pse/app/modules/crypto/views/crypto_view.dart';
+import 'package:getx_stocks_pse/app/modules/cryptos/bindings/cryptos_binding.dart';
+import 'package:getx_stocks_pse/app/modules/cryptos/views/cryptos_view.dart';
 
 import 'package:getx_stocks_pse/app/modules/home/bindings/home_binding.dart';
 import 'package:getx_stocks_pse/app/modules/home/views/home_view.dart';
-import 'package:getx_stocks_pse/app/modules/stock/bindings/stock_binding.dart';
-import 'package:getx_stocks_pse/app/modules/stock/views/stock_view.dart';
-import 'package:getx_stocks_pse/app/modules/stocks/bindings/stocks_binding.dart';
-import 'package:getx_stocks_pse/app/modules/stocks/views/stocks_view.dart';
 
 part 'app_routes.dart';
 
@@ -22,9 +22,9 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.STOCKS, //'/stocks'
-      page: () => StocksView(),
-      binding: StocksBinding(),
+      name: _Paths.CRYPTOS, //'/stocks'
+      page: () => CryptosView(),
+      binding: CryptosBinding(),
     ),
     GetPage(
       name: _Paths.CRYPTO,

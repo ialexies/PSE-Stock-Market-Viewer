@@ -8,7 +8,7 @@ import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
 // import 'package:getx_stocks_pse/app/data/models/crypto_mode.dart';
 
 // import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
-import 'package:getx_stocks_pse/app/modules/stock/controllers/crypto_controller.dart';
+import 'package:getx_stocks_pse/app/modules/crypto/controllers/crypto_controller.dart';
 // import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
 
 import 'package:intl/intl.dart';

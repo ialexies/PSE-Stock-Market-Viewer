@@ -7,13 +7,13 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
 // import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
-import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
+import 'package:getx_stocks_pse/app/data/models/cryptos_model.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../controllers/stocks_controller.dart';
+import '../controllers/cryptos_controller.dart';
 import 'package:intl/intl.dart' as intl;
 
-class StocksView extends GetView<StocksController> {
+class CryptosView extends GetView<CryptosController> {
   final decimalFormatter = intl.NumberFormat.decimalPattern();
   TextEditingController searchTextController = TextEditingController();
   // List<String> currencies = ['USD', 'PHP'];
@@ -116,7 +116,7 @@ class StocksView extends GetView<StocksController> {
                           debugPrint('Something changed in Title Text Field');
                           controller.isSearch(true);
                           controller.searchText(searchTextController.text);
-                          controller.requestStocksProvider();
+                          controller.requestCryptosProvider();
                         } else {
                           controller.isSearch(false);
                         }
@@ -299,18 +299,18 @@ class StocksView extends GetView<StocksController> {
     );
   }
 
-  toMap(Stocks stocks) {
+  toMap(Cryptos cryptos) {
     var map = Map<String, String>();
-    map['tickerSymbol'] = stocks.tickerSymbol.toString();
-    map['companyName'] = stocks.companyName.toString();
-    map['price'] = stocks.price.toString();
-    map['high24h'] = stocks.high24h.toString();
-    map['low24h'] = stocks.low24h.toString();
+    map['tickerSymbol'] = cryptos.tickerSymbol.toString();
+    map['companyName'] = cryptos.companyName.toString();
+    map['price'] = cryptos.price.toString();
+    map['high24h'] = cryptos.high24h.toString();
+    map['low24h'] = cryptos.low24h.toString();
     map['priceChangePercentage24h'] =
-        stocks.priceChangePercentage24h.toString();
-    map['img'] = stocks.img.toString();
-    map['marketCap'] = stocks.marketCap.toString();
-    map['totalVolume'] = stocks.totalVolume.toString();
+        cryptos.priceChangePercentage24h.toString();
+    map['img'] = cryptos.img.toString();
+    map['marketCap'] = cryptos.marketCap.toString();
+    map['totalVolume'] = cryptos.totalVolume.toString();
     return map;
   }
 }

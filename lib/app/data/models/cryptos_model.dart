@@ -1,4 +1,4 @@
-class Stocks {
+class Cryptos {
   String? tickerSymbol;
   String? companyName;
   double? price;
@@ -25,7 +25,7 @@ class Stocks {
   String? roi;
   String? lastUpdated;
 
-  Stocks({
+  Cryptos({
     this.tickerSymbol,
     this.companyName,
     this.price,
@@ -37,9 +37,9 @@ class Stocks {
     this.totalVolume,
   });
 
-  // US Stocks
-  factory Stocks.fromJson(Map<String, dynamic> json) {
-    return Stocks(
+  // US Cryptos
+  factory Cryptos.fromJson(Map<String, dynamic> json) {
+    return Cryptos(
       tickerSymbol: json['symbol'],
       companyName: json['name'],
       price: json['current_price'].toDouble(),
