@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
 // import 'package:getx_stocks_pse/app/data/providers/stock_provider.dart';
 import 'package:getx_stocks_pse/app/data/services/stocks_service.dart';
-import 'package:getx_stocks_pse/app/modules/stock/controllers/stock_controller.dart';
+// import 'package:getx_stocks_pse/app/modules/stock/controllers/stock_controller.dart';
 import 'dart:convert';
 
 import 'package:intl/intl.dart';

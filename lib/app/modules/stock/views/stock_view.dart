@@ -2,15 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
-import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
+import 'package:getx_stocks_pse/app/data/models/crypto_history.dart';
+import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
+// import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
+// import 'package:getx_stocks_pse/app/data/models/crypto_mode.dart';
+
+// import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
+import 'package:getx_stocks_pse/app/modules/stock/controllers/crypto_controller.dart';
+// import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
 
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../controllers/stock_controller.dart';
+// import '../controllers/stock_controller.dart';
 
-class StockView extends GetView<StockController> {
+class CryptoView extends GetView<CryptoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +26,8 @@ class StockView extends GetView<StockController> {
       ),
       body: Center(
         child: Container(
-          child: FutureBuilder<Stock>(
-              future: controller.getStockInfo(Get.parameters['tickerSymbol']),
+          child: FutureBuilder<Crypto>(
+              future: controller.getCryptoInfo(Get.parameters['tickerSymbol']),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return CircularProgressIndicator();
@@ -38,17 +44,18 @@ class StockView extends GetView<StockController> {
                               primaryXAxis: DateTimeAxis(),
                               enableAxisAnimation: true,
                               indicators: <
-                                  TechnicalIndicators<StockHistory, DateTime>>[
+                                  TechnicalIndicators<CryptoHistory, DateTime>>[
                             RsiIndicator(
                               dataSource: controller.stockHistoryList,
-                              xValueMapper: (StockHistory stockHistory, _) =>
+                              xValueMapper: (CryptoHistory stockHistory, _) =>
                                   stockHistory.tradingDate,
                               closeValueMapper:
-                                  (StockHistory stockHistory, _) =>
+                                  (CryptoHistory stockHistory, _) =>
                                       stockHistory.close,
-                              highValueMapper: (StockHistory stockHistory, _) =>
-                                  stockHistory.high,
-                              lowValueMapper: (StockHistory stockHistory, _) =>
+                              highValueMapper:
+                                  (CryptoHistory stockHistory, _) =>
+                                      stockHistory.high,
+                              lowValueMapper: (CryptoHistory stockHistory, _) =>
                                   stockHistory.low,
                             ),
                             MacdIndicator(
@@ -58,16 +65,16 @@ class StockView extends GetView<StockController> {
                               shortPeriod: 7,
                               macdLineColor: Colors.red,
                               dataSource: controller.stockHistoryList,
-                              xValueMapper: (StockHistory stockHistory, _) =>
+                              xValueMapper: (CryptoHistory stockHistory, _) =>
                                   stockHistory.tradingDate,
                               closeValueMapper:
-                                  (StockHistory stockHistory, _) =>
+                                  (CryptoHistory stockHistory, _) =>
                                       stockHistory.close,
                             )
                           ],
-                              series: <ChartSeries<StockHistory, DateTime>>[
+                              series: <ChartSeries<CryptoHistory, DateTime>>[
                             // Renders line chart
-                            LineSeries<StockHistory, DateTime>(
+                            LineSeries<CryptoHistory, DateTime>(
                                 width: 100,
                                 trendlines: <Trendline>[
                                   Trendline(
@@ -78,9 +85,9 @@ class StockView extends GetView<StockController> {
                                       opacity: .3)
                                 ],
                                 dataSource: controller.stockHistoryList,
-                                xValueMapper: (StockHistory stockHistory, _) =>
+                                xValueMapper: (CryptoHistory stockHistory, _) =>
                                     stockHistory.tradingDate,
-                                yValueMapper: (StockHistory stockHistory, _) =>
+                                yValueMapper: (CryptoHistory stockHistory, _) =>
                                     stockHistory.close)
                           ])),
                       Column(

@@ -27,8 +27,8 @@ class AppPages {
       binding: StocksBinding(),
     ),
     GetPage(
-      name: _Paths.STOCK,
-      page: () => StockView(),
+      name: _Paths.CRYPTO,
+      page: () => CryptoView(),
       binding: StockBinding(),
     ),
   ];

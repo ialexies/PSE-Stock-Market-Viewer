@@ -1,4 +1,4 @@
-class Stock {
+class Crypto {
   String? tickerSymbol;
   String? companyName;
   String? status;
@@ -6,18 +6,18 @@ class Stock {
   String? price;
   String? img;
 
-  Stock(
+  Crypto(
       {this.tickerSymbol, this.companyName, this.status, this.price, this.img});
 
-  factory Stock.fromJson(Map<String, dynamic> jsonData) {
-    return Stock(
+  factory Crypto.fromJson(Map<String, dynamic> jsonData) {
+    return Crypto(
       tickerSymbol: jsonData['tickerSymbol'],
       companyName: jsonData['companyName'],
       status: jsonData['status'],
       price: jsonData['price'],
       img: jsonData['img'],
     );
-    // price: pricetoStockPrice(
+    // price: pricetoCryptoPrice(
     // jsonData['price']["date"],
     // jsonData['price']["low"],
     // jsonData['price']["open"],
@@ -28,8 +28,8 @@ class Stock {
     // ));
   }
 
-  // factory Stock.pricefromJson(Map<String, dynamic> json) {
-  //   return Stock(
+  // factory Crypto.pricefromJson(Map<String, dynamic> json) {
+  //   return Crypto(
 
   //   );
   // }
@@ -44,7 +44,7 @@ class Stock {
   }
 }
 
-//  pricetoStockPrice() {
+//  pricetoCryptoPrice() {
 //   DateTime? stockdate;
 //   double? low;
 //   double? open;
@@ -52,6 +52,6 @@ class Stock {
 //   double? high;
 //   double? volume;
 //   DateTime? timestamp;
-// pricetoStockPrice(open);
+// pricetoCryptoPrice(open);
 
-pricetoStockPrice(stockdate, low, open, close, high, volume, timestamp) {}
+pricetoCryptoPrice(stockdate, low, open, close, high, volume, timestamp) {}

@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
-import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
+// import 'package:getx_stocks_pse/app/data/models/stock_model.dart';
 import 'package:getx_stocks_pse/app/data/models/stocks_model.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -172,7 +172,7 @@ class StocksView extends GetView<StocksController> {
                               onTap: () {
                                 var stockData =
                                     controller.stockList.value[index].toJson();
-                                Get.toNamed(Routes.STOCK,
+                                Get.toNamed(Routes.CRYPTO,
                                     parameters: stockData);
                               },
                               leading: Padding(
@@ -242,7 +242,7 @@ class StocksView extends GetView<StocksController> {
                                               TextSpan(
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 30.sp,
+                                                  fontSize: 35.sp,
                                                   color: Colors.black,
                                                 ),
                                                 text:
