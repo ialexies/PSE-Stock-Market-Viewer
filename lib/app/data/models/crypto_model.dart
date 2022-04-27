@@ -15,23 +15,7 @@ class Crypto {
       price: jsonData['price'],
       img: jsonData['img'],
     );
-    // price: pricetoCryptoPrice(
-    // jsonData['price']["date"],
-    // jsonData['price']["low"],
-    // jsonData['price']["open"],
-    // jsonData['price']["close"],
-    // jsonData['price']["high"],
-    // jsonData['price']["volume"],
-    // jsonData['price']["timestamp"],
-    // ));
   }
-
-  // factory Crypto.pricefromJson(Map<String, dynamic> json) {
-  //   return Crypto(
-
-  //   );
-  // }
-
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data["tickerSymbol"] = symbol;
@@ -41,15 +25,5 @@ class Crypto {
     return data;
   }
 }
-
-//  pricetoCryptoPrice() {
-//   DateTime? stockdate;
-//   double? low;
-//   double? open;
-//   double? close;
-//   double? high;
-//   double? volume;
-//   DateTime? timestamp;
-// pricetoCryptoPrice(open);
 
 pricetoCryptoPrice(stockdate, low, open, close, high, volume, timestamp) {}
