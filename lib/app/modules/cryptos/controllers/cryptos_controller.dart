@@ -15,8 +15,8 @@ class CryptosController extends GetxController {
   //TODO: Implement CryptosController
 
   // final count = 0.obs;
-  var stockList = <Cryptos>[].obs;
-  List<Cryptos> stockListFiltered = <Cryptos>[].obs;
+  var cryptoList = <Cryptos>[].obs;
+  List<Cryptos> cryptoListFiltered = <Cryptos>[].obs;
   var stockStreamController = StreamController<Cryptos>().obs;
   var isStreamOn = true.obs;
   var stocks = Cryptos().obs;
@@ -72,16 +72,16 @@ class CryptosController extends GetxController {
     result.forEach((data) {
       tempStockList.add(Cryptos.fromJson(data));
     });
-    stockList.value = tempStockList;
+    cryptoList.value = tempStockList;
 
     isLoading.value = false;
 
     if (isSearch.value == true && searchText.value != "") {
       searchFilter(searchText.value);
     } else if (isSearch.value == false && searchText.value == "") {
-      stockListFiltered = stockList;
+      cryptoListFiltered = cryptoList;
     } else {
-      stockListFiltered = stockList;
+      cryptoListFiltered = cryptoList;
     }
   }
 
@@ -127,15 +127,15 @@ class CryptosController extends GetxController {
     var result = json.decode(stocks.body);
 
     result.forEach((data) {
-      stockList.add(Cryptos.fromJson(data));
+      cryptoList.add(Cryptos.fromJson(data));
     });
     isLoading(false);
-    stockListFiltered = await stockList;
+    cryptoListFiltered = await cryptoList;
   }
 
   void searchFilter(String q) async {
     // _getAllProducts();
-    List<Cryptos> tempStockAll = await stockList;
+    List<Cryptos> tempStockAll = await cryptoList;
     List<Cryptos> filteredResult = [];
 
     filteredResult = tempStockAll
@@ -146,10 +146,10 @@ class CryptosController extends GetxController {
 
     // filteredResult =
 
-    // stockListFiltered.clear();
-    stockListFiltered = filteredResult;
+    // cryptoListFiltered.clear();
+    cryptoListFiltered = filteredResult;
     // isSearch.value = false;
-    // stockList = stockListFiltered;
+    // cryptoList = cryptoListFiltered;
     update();
     // Get.back();
   }

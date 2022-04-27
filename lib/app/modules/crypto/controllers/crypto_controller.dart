@@ -13,9 +13,7 @@ import 'package:getx_stocks_pse/app/data/services/crypto_service.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CryptoController extends GetxController {
-  //TODO: Implement CryptoController
-
-  final CryptoService _stocksService = CryptoService();
+  final CryptoService _cryptoService = CryptoService();
   List<CryptoHistory> stockHistoryList = <CryptoHistory>[].obs;
   final CryptoHistoryService _stockHistoryService = CryptoHistoryService();
 
@@ -23,9 +21,9 @@ class CryptoController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() {
-    Crypto fetchCrypto = Crypto.fromJson(Get.parameters);
+    // Crypto fetchCrypto = Crypto.fromJson(Get.parameters);
 
-    getCryptoInfo(fetchCrypto.companyName);
+    // getCryptoInfo(fetchCrypto.name);
 
     zoomPanBehavior.value = ZoomPanBehavior(
         // Enables pinch zooming
@@ -39,25 +37,13 @@ class CryptoController extends GetxController {
     super.onReady();
   }
 
-  Future<Crypto> getCryptoInfo(tickerSymbol) async {
+  Future<Crypto> getCryptoInfo(id) async {
     String api = "coins";
-    var stock = await _stocksService.getCrypto(api, tickerSymbol);
-    var response = await stock.body;
-    // var data = Crypto.fromJson(response);
-    // var data = Crypto.fromJson(response.toString());
-    // var crypto_data   = Crypto()
-    // result["stocks"].forEach((data) async {
-    var decoded = json.decode(response);
-    var a = await Crypto.fromJson(json.decode(response));
-    // List<CryptoHistory>? stockHistory = await getCryptoHistory(tickerSymbol);
-    // var stockInfo = await {"stock": stock, "stockHistory": stockHistory};
-    // stock = result;
-    // print(stock);
-    // });
-    // getCryptoHistory(Get.arguments['tickerSymbol']);
-    // stockHistoryList = await getCryptoHistory(tickerSymbol);
-    // return await stock;
-    return await stock;
+    var response = await _cryptoService.getCrypto(api, id);
+
+    Crypto mappedResponse = Crypto.fromJson(json.decode(response.body));
+
+    return mappedResponse;
     // result
   }
 

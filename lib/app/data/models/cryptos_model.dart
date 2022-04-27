@@ -1,4 +1,5 @@
 class Cryptos {
+  String? id;
   String? tickerSymbol;
   String? companyName;
   double? price;
@@ -26,6 +27,7 @@ class Cryptos {
   String? lastUpdated;
 
   Cryptos({
+    this.id,
     this.tickerSymbol,
     this.companyName,
     this.price,
@@ -40,6 +42,7 @@ class Cryptos {
   // US Cryptos
   factory Cryptos.fromJson(Map<String, dynamic> json) {
     return Cryptos(
+      id: json['id'],
       tickerSymbol: json['symbol'],
       companyName: json['name'],
       price: json['current_price'].toDouble(),
@@ -54,6 +57,7 @@ class Cryptos {
 
   Map<String, String> toJson() {
     final data = <String, String>{};
+    data['id'] = id.toString();
     data['tickerSymbol'] = tickerSymbol.toString();
     data['companyName'] = companyName.toString();
     data['price'] = price.toString();

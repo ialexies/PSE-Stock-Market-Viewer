@@ -27,7 +27,7 @@ class CryptoView extends GetView<CryptoController> {
       body: Center(
         child: Container(
           child: FutureBuilder<Crypto>(
-              future: controller.getCryptoInfo(Get.parameters['tickerSymbol']),
+              future: controller.getCryptoInfo(Get.arguments),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return CircularProgressIndicator();
@@ -96,8 +96,7 @@ class CryptoView extends GetView<CryptoController> {
                           ListTile(
                             leading: Column(
                               children: [
-                                Text(
-                                    '${snapshot.data?.tickerSymbol.toString()} ',
+                                Text('${snapshot.data?.symbol.toString()} ',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 30)),
@@ -108,7 +107,7 @@ class CryptoView extends GetView<CryptoController> {
                               ],
                             ),
                             title: Text(
-                              '${snapshot.data?.companyName.toString()}',
+                              '${snapshot.data?.name.toString()}',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Column(

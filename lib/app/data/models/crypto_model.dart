@@ -1,19 +1,17 @@
 class Crypto {
-  String? tickerSymbol;
-  String? companyName;
-  String? status;
+  String? symbol;
+  String? name;
+
   // Map<String, dynamic>? price;
   String? price;
   String? img;
 
-  Crypto(
-      {this.tickerSymbol, this.companyName, this.status, this.price, this.img});
+  Crypto({this.symbol, this.name, this.price, this.img});
 
   factory Crypto.fromJson(Map<String, dynamic> jsonData) {
     return Crypto(
-      tickerSymbol: jsonData['tickerSymbol'],
-      companyName: jsonData['companyName'],
-      status: jsonData['status'],
+      symbol: jsonData['symbol'],
+      name: jsonData['name'],
       price: jsonData['price'],
       img: jsonData['img'],
     );
@@ -36,9 +34,9 @@ class Crypto {
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data["tickerSymbol"] = tickerSymbol;
-    data["companyName"] = companyName;
-    data["status"] = status;
+    data["tickerSymbol"] = symbol;
+    data["companyName"] = name;
+    // data["status"] = status;
     data["price"] = price;
     return data;
   }
