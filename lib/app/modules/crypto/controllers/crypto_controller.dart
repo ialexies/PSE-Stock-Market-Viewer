@@ -10,12 +10,16 @@ import 'package:getx_stocks_pse/app/data/services/crypto_history_service.dart';
 // import 'package:getx_stocks_pse/app/data/services/stock_history_service.dart';
 // import 'package:getx_stocks_pse/app/data/services/stock_history_service.dart';
 import 'package:getx_stocks_pse/app/data/services/crypto_service.dart';
+
+import 'package:getx_stocks_pse/app/modules/cryptos/controllers/cryptos_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CryptoController extends GetxController {
   final CryptoService _cryptoService = CryptoService();
   List<CryptoHistory> stockHistoryList = <CryptoHistory>[].obs;
   final CryptoHistoryService _stockHistoryService = CryptoHistoryService();
+
+  final CryptosController cryptosController = Get.put(CryptosController());
 
   Rx<ZoomPanBehavior> zoomPanBehavior = ZoomPanBehavior().obs;
   final count = 0.obs;
@@ -41,7 +45,8 @@ class CryptoController extends GetxController {
     String api = "coins";
     var response = await _cryptoService.getCrypto(api, id);
 
-    Crypto mappedResponse = Crypto.fromJson(json.decode(response.body));
+    Crypto mappedResponse = Crypto.fromJson(json.decode(response.body),
+        cryptosController.currencySelected.value.toString());
 
     return mappedResponse;
     // result

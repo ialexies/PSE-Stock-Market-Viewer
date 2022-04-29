@@ -1,13 +1,19 @@
 import 'dart:async';
 
+import 'package:crypto_font_icons/crypto_font_icon_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/core/values/const.dart';
+// import 'package:getx_stocks_pse/app/core/values/const.dart';
+import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
 import 'package:getx_stocks_pse/app/data/models/cryptos_model.dart';
 
 import 'package:getx_stocks_pse/app/data/services/cryptos_service.dart';
+// import 'package:getx_stocks_pse/core/values/const.dart';
 // import 'package:getx_stocks_pse/app/modules/stock/controllers/stock_controller.dart';
 import 'dart:convert';
+import 'package:crypto_font_icons/crypto_font_icons.dart';
 
 import 'package:intl/intl.dart';
 
@@ -24,10 +30,13 @@ class CryptosController extends GetxController {
   var searchType = "Company Name".obs;
   var isSearch = false.obs;
   var searchText = "".obs;
-  var currencies = <String>['USD', 'PHP'].obs;
+  // var currencies = <String>['USD', 'PHP'].obs;
+  var currencies = ConstantData.currencies;
   var currenciesSymbols = <String>['\$', 'Php'].obs;
-  var currencySelected = "USD".obs;
+  var currencySelected = "usd".obs;
   var currencySelectedSymbol = "\$".obs;
+  // var currencySelectedIcon = CryptoFontIconData(0).obs;
+  var selectedCryptoImage = "".obs;
   var searchTextController = TextEditingController().obs;
 
   final CryptosService _stocksService = CryptosService();
@@ -74,6 +83,14 @@ class CryptosController extends GetxController {
     });
     cryptoList.value = tempStockList;
 
+    List<Cryptos> selectedCryptoImageList = tempStockList
+        .where((element) => element.tickerSymbol == currencySelected.value)
+        .toList();
+
+    selectedCryptoImage.value = selectedCryptoImageList.length > 0
+        ? selectedCryptoImageList[0].img.toString()
+        : "";
+
     isLoading.value = false;
 
     if (isSearch.value == true && searchText.value != "") {
@@ -113,10 +130,16 @@ class CryptosController extends GetxController {
   }
 
   updateCurrencySelected(String val) {
-    if (val == "USD") {
+    if (val == "usd") {
       currencySelectedSymbol.value = "\$";
-    } else if (val == "PHP") {
+      // currencySelectedIcon.value = CryptoFontIcons.usd
+    } else if (val == "php") {
       currencySelectedSymbol.value = "P";
+    } else if (val == "btc") {
+      currencySelectedSymbol.value = "";
+      // currencySelectedIcon.value = CryptoFontIcons.BTC;
+    } else {
+      currencySelectedSymbol.value = "";
     }
     currencySelected.value = val;
     update();

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/core/utils/helpers.dart';
 import 'package:getx_stocks_pse/app/data/models/crypto_history.dart';
 import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
 // import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
@@ -29,6 +30,7 @@ class CryptoView extends GetView<CryptoController> {
           child: FutureBuilder<Crypto>(
               future: controller.getCryptoInfo(Get.arguments),
               builder: (context, snapshot) {
+                var data = snapshot.data;
                 if (!snapshot.hasData) {
                   return CircularProgressIndicator();
                 } else {
@@ -96,48 +98,42 @@ class CryptoView extends GetView<CryptoController> {
                           ListTile(
                             leading: Column(
                               children: [
-                                Text('${snapshot.data?.symbol.toString()} ',
+                                // Image.network(
+                                //     '${controller.cryptoListFiltered[index].img}',
+                                //     width: 130.w),
+                                Text(
+                                    '${data?.symbol.toString().toUpperCase()} ',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 30)),
-                                // Text('(${snapshot.data?.price?["close"]})',
-                                //     style: TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 15)),
                               ],
                             ),
-                            title: Text(
-                              '${snapshot.data?.name.toString()}',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                            title: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${data?.name.toString()}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data?.marketData!.currentPrice.toString())} ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Open: Php ${snapshot.data?.price} Close: Php ${snapshot.data?.price}  ',
+                                  'Open:  ${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data?.marketData!.currentPrice)}',
                                   textAlign: TextAlign.left,
                                 ),
-                                // Text(
-                                //     'High: Php ${snapshot.data?.price?["high"]} Low: Php ${snapshot.data?.price?["low"]}  '),
-                                // Text(
-                                //     'Volume: ${snapshot.data?.price?["volume"]}'),
-                                // Text(
-                                //     'Timestamp: ${snapshot.data?.price?["timestamp"]}'),
+                                Text(
+                                  'Close: ${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data?.marketData!.currentPrice.toString())}',
+                                  textAlign: TextAlign.left,
+                                ),
                               ],
                             ),
-                            // subtitle: Wrap(
-                            //   // mainAxisSize: MainAxisSize.max,
-                            //   children: [
-                            //     Text(
-                            //         'Low : Php ${snapshot.data?.price?["close"]}'),
-                            //     Text(
-                            //         'Open : Php ${snapshot.data?.price?["open"]}'),
-                            //     Text(
-                            //         'Close : Php ${snapshot.data?.price?["close"]}'),
-                            //     Text(
-                            //         'High : Php ${snapshot.data?.price?["high"]}'),
-                            //   ],
-                            // ),
                           ),
                         ],
                       ),

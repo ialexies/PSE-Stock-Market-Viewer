@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:crypto_font_icons/crypto_font_icons.dart';
 
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controllers/cryptos_controller.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -223,37 +225,75 @@ class CryptosView extends GetView<CryptosController> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          RichText(
-                                              text: TextSpan(
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              TextSpan(
+                                              Text(
+                                                '${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 35.sp,
+                                                  fontSize: 30.sp,
                                                   color: Colors.black,
                                                 ),
-                                                text:
-                                                    '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
-                                                // '${controller.currencySelectedSymbol.value}${double.parse(controller.cryptoListFiltered[index].price?.toStringAsFixed() ?? "0")}',
                                               ),
-                                              TextSpan(text: ' '),
-                                              TextSpan(
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 30.sp,
-                                                    color: controller
-                                                                .cryptoList
-                                                                .value[index]
-                                                                .priceChangePercentage24h!
-                                                                .toDouble() >=
-                                                            1
-                                                        ? Colors.blue
-                                                        : Colors.red,
-                                                  ),
-                                                  text:
-                                                      '${controller.cryptoListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
+                                              Text(
+                                                controller
+                                                    .currencySelected.value
+                                                    .toUpperCase(),
+                                                style: GoogleFonts.oswald(
+                                                    fontSize: 24.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.blueGrey),
+                                              ),
                                             ],
-                                          )),
+                                          ),
+                                          Text(
+                                              '${controller.cryptoListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 26.sp,
+                                                color: controller
+                                                            .cryptoList
+                                                            .value[index]
+                                                            .priceChangePercentage24h!
+                                                            .toDouble() >=
+                                                        1
+                                                    ? Colors.blue
+                                                    : Colors.red,
+                                              )),
+                                          // RichText(
+                                          //     text: TextSpan(
+                                          //   children: [
+                                          //     TextSpan(
+                                          //       style: TextStyle(
+                                          //         fontWeight: FontWeight.bold,
+                                          //         fontSize: 35.sp,
+                                          //         color: Colors.black,
+                                          //       ),
+                                          //       text:
+                                          //           // '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
+                                          //           '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
+                                          //       // '${controller.currencySelectedSymbol.value}${double.parse(controller.cryptoListFiltered[index].price?.toStringAsFixed() ?? "0")}',
+                                          //     ),
+                                          //     TextSpan(text: ' '),
+                                          //     TextSpan(
+                                          //         style: TextStyle(
+                                          //           fontWeight: FontWeight.w500,
+                                          //           fontSize: 30.sp,
+                                          //           color: controller
+                                          //                       .cryptoList
+                                          //                       .value[index]
+                                          //                       .priceChangePercentage24h!
+                                          //                       .toDouble() >=
+                                          //                   1
+                                          //               ? Colors.blue
+                                          //               : Colors.red,
+                                          //         ),
+                                          //         text:
+                                          //             '${controller.cryptoListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
+                                          //   ],
+                                          // )),
                                           Text(
                                             'High: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].high24h)}  ',
                                             style: TextStyles()
