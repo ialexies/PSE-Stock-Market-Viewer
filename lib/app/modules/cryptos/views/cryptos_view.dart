@@ -4,6 +4,7 @@ import 'package:crypto_font_icons/crypto_font_icons.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/core/utils/helpers.dart';
 import 'package:getx_stocks_pse/app/data/assets/styles/text_styles.dart';
 import 'package:getx_stocks_pse/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,38 +50,41 @@ class CryptosView extends GetView<CryptosController> {
                                   Offset(-2, -2), // changes position of shadow
                             ),
                           ]),
-                      child: DropdownButton<String>(
-                        borderRadius: BorderRadius.circular(10.r),
+                      child: ButtonTheme(
+                        padding: EdgeInsets.all(0),
+                        child: DropdownButton<String>(
+                          borderRadius: BorderRadius.circular(10.r),
 
-                        value: controller.currencySelected.value,
-                        icon: const Icon(Icons.arrow_downward),
-                        iconSize: 18,
-                        elevation: 16,
-                        style: const TextStyle(color: Colors.white),
-                        iconDisabledColor: Colors.green,
-                        // hint: Text('Select Item'),
-                        dropdownColor: Colors.blue[600],
-                        iconEnabledColor: Colors.yellow,
-                        underline: SizedBox(
-                            // height: 2,
-                            // color: Colors.deepPurpleAccent,
-                            ),
-                        onChanged: (String? newValue) {
-                          controller.isLoading(true);
-                          controller.updateCurrencySelected(newValue!);
-                        },
-                        // items:
-                        items: controller.currencies
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                              value: value,
-                              child: SizedBox(
-                                child: Text(
-                                  value,
-                                  // style: TextStyle(color: Colors.red),
-                                ),
-                              ));
-                        }).toList(),
+                          value: controller.currencySelected.value,
+                          icon: const Icon(Icons.arrow_downward),
+                          iconSize: 18,
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.white),
+                          iconDisabledColor: Colors.green,
+                          // hint: Text('Select Item'),
+                          dropdownColor: Colors.blue[600],
+                          iconEnabledColor: Colors.yellow,
+                          underline: SizedBox(
+                              // height: 2,
+                              // color: Colors.deepPurpleAccent,
+                              ),
+                          onChanged: (String? newValue) {
+                            controller.isLoading(true);
+                            controller.updateCurrencySelected(newValue!);
+                          },
+                          // items:
+                          items: controller.currencies
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value,
+                                child: SizedBox(
+                                  child: Text(
+                                    value,
+                                    // style: TextStyle(color: Colors.red),
+                                  ),
+                                ));
+                          }).toList(),
+                        ),
                       ),
                     )),
               ],
@@ -230,7 +234,7 @@ class CryptosView extends GetView<CryptosController> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
+                                                '${Helpers().moneyFormatter(controller.cryptoListFiltered[index].price.toString())}',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 30.sp,

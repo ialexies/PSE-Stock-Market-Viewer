@@ -2,12 +2,15 @@ import 'dart:convert';
 
 class MarketData {
   String? currentPrice;
-
-  String? roi;
+  String? marketCap;
+  String? high24;
+  String? low24;
 
   MarketData({
     this.currentPrice,
-    this.roi,
+    this.marketCap,
+    this.high24,
+    this.low24,
   });
 
   Map<String, dynamic> toMap() {
@@ -17,10 +20,6 @@ class MarketData {
       result.addAll({'currentPrice': currentPrice});
     }
 
-    if (roi != null) {
-      result.addAll({'roi': roi});
-    }
-
     return result;
   }
 
@@ -28,7 +27,9 @@ class MarketData {
       Map<String, dynamic> map, String selectedCurrency) {
     final marketData = MarketData(
       currentPrice: map['current_price'][selectedCurrency].toString(),
-      roi: map['roi'],
+      marketCap: map['market_cap'][selectedCurrency].toString(),
+      high24: map["high_24h"]["usd"].toString(),
+      low24: map["low_24h"]["usd"].toString(),
     );
     return marketData;
   }

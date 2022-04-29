@@ -14,7 +14,7 @@ import 'package:getx_stocks_pse/app/modules/crypto/controllers/crypto_controller
 
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import '../controllers/stock_controller.dart';
 
 class CryptoView extends GetView<CryptoController> {
@@ -96,27 +96,31 @@ class CryptoView extends GetView<CryptoController> {
                         children: [
                           Divider(),
                           ListTile(
-                            leading: Column(
-                              children: [
-                                // Image.network(
-                                //     '${controller.cryptoListFiltered[index].img}',
-                                //     width: 130.w),
-                                Text(
-                                    '${data?.symbol.toString().toUpperCase()} ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30)),
-                              ],
-                            ),
+                            tileColor: Colors.amber.withOpacity(.1),
+                            contentPadding: EdgeInsets.all(10),
+                            leading: Image.network(
+                                '${data!.img!.large.toString()}',
+                                width: 150.w),
                             title: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${data?.name.toString()}',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${data.symbol.toString().toUpperCase()} - ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      '${data.name.toString()}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blueGrey),
+                                    ),
+                                  ],
                                 ),
                                 Text(
-                                  '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data?.marketData!.currentPrice.toString())} ',
+                                  '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data.marketData!.currentPrice.toString())} ',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -124,17 +128,57 @@ class CryptoView extends GetView<CryptoController> {
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Open:  ${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data?.marketData!.currentPrice)}',
-                                  textAlign: TextAlign.left,
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Market Cap:  '.toUpperCase(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10),
+                                    ),
+                                    Text(
+                                      '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data.marketData!.marketCap)}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  'Close: ${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data?.marketData!.currentPrice.toString())}',
-                                  textAlign: TextAlign.left,
+                                Row(
+                                  children: [
+                                    Text(
+                                      'High:  '.toUpperCase(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10),
+                                    ),
+                                    Text(
+                                      '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data.marketData!.high24)}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Low:  '.toUpperCase(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10),
+                                    ),
+                                    Text(
+                                      'Low 24: ${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data.marketData!.low24.toString())}',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(fontSize: 10),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
+                          Container(
+                              padding: EdgeInsets.all(15),
+                              child: Text('${data.description}'))
                         ],
                       ),
                     ],
