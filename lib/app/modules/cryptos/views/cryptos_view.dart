@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:crypto_font_icons/crypto_font_icons.dart';
 
 import 'package:flutter/material.dart';
 
@@ -27,7 +26,7 @@ class CryptosView extends GetView<CryptosController> {
               centerTitle: true,
               actions: [
                 Obx(() => Container(
-                      margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(20.w),
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       decoration: BoxDecoration(
@@ -50,24 +49,27 @@ class CryptosView extends GetView<CryptosController> {
                                   Offset(-2, -2), // changes position of shadow
                             ),
                           ]),
-                      child: ButtonTheme(
-                        padding: EdgeInsets.all(0),
+                      child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           borderRadius: BorderRadius.circular(10.r),
+                          // isExpanded: true,
+                          // itemHeight: 50,
+                          // menuMaxHeight: 300,
+                          isDense: true,
 
                           value: controller.currencySelected.value,
                           icon: const Icon(Icons.arrow_downward),
                           iconSize: 18,
                           elevation: 16,
                           style: const TextStyle(color: Colors.white),
-                          iconDisabledColor: Colors.green,
+                          iconDisabledColor: Colors.white,
                           // hint: Text('Select Item'),
                           dropdownColor: Colors.blue[600],
                           iconEnabledColor: Colors.yellow,
-                          underline: SizedBox(
-                              // height: 2,
-                              // color: Colors.deepPurpleAccent,
-                              ),
+                          // underline: SizedBox(
+                          //     // height: 2,
+                          //     // color: Colors.deepPurpleAccent,
+                          //     ),
                           onChanged: (String? newValue) {
                             controller.isLoading(true);
                             controller.updateCurrencySelected(newValue!);
@@ -79,7 +81,7 @@ class CryptosView extends GetView<CryptosController> {
                                 value: value,
                                 child: SizedBox(
                                   child: Text(
-                                    value,
+                                    value.toUpperCase(),
                                     // style: TextStyle(color: Colors.red),
                                   ),
                                 ));

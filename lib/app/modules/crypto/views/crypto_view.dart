@@ -146,7 +146,7 @@ class CryptoView extends GetView<CryptoController> {
                                 Row(
                                   children: [
                                     Text(
-                                      'High:  '.toUpperCase(),
+                                      'High 24:  '.toUpperCase(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 10),
@@ -161,13 +161,13 @@ class CryptoView extends GetView<CryptoController> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Low:  '.toUpperCase(),
+                                      'Low 24:  '.toUpperCase(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 10),
                                     ),
                                     Text(
-                                      'Low 24: ${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data.marketData!.low24.toString())}',
+                                      '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(data.marketData!.low24.toString())}',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(fontSize: 10),
                                     ),

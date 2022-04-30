@@ -1,21 +1,13 @@
 import 'dart:async';
 
-import 'package:crypto_font_icons/crypto_font_icon_data.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/core/values/const.dart';
-// import 'package:getx_stocks_pse/app/core/values/const.dart';
-import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
 import 'package:getx_stocks_pse/app/data/models/cryptos_model.dart';
-
 import 'package:getx_stocks_pse/app/data/services/cryptos_service.dart';
-// import 'package:getx_stocks_pse/core/values/const.dart';
-// import 'package:getx_stocks_pse/app/modules/stock/controllers/stock_controller.dart';
 import 'dart:convert';
-import 'package:crypto_font_icons/crypto_font_icons.dart';
-
-import 'package:intl/intl.dart';
 
 class CryptosController extends GetxController {
   //TODO: Implement CryptosController
@@ -30,12 +22,10 @@ class CryptosController extends GetxController {
   var searchType = "Company Name".obs;
   var isSearch = false.obs;
   var searchText = "".obs;
-  // var currencies = <String>['USD', 'PHP'].obs;
   var currencies = ConstantData.currencies;
   var currenciesSymbols = <String>['\$', 'Php'].obs;
   var currencySelected = "usd".obs;
   var currencySelectedSymbol = "\$".obs;
-  // var currencySelectedIcon = CryptoFontIconData(0).obs;
   var selectedCryptoImage = "".obs;
   var searchTextController = TextEditingController().obs;
 
@@ -43,8 +33,6 @@ class CryptosController extends GetxController {
 
   @override
   void onInit() {
-    // fetchCryptos();
-    // _getAllProducts();
     stockStreamController.value.addStream(stockStream());
     super.onInit();
   }
@@ -65,17 +53,17 @@ class CryptosController extends GetxController {
       await Future.delayed(Duration(milliseconds: 2000));
       try {
         // searchFilter("z");
-        requestCryptosProvider();
+        faetchCryptos();
       } catch (e) {
         // isLoading.value = true;
       }
     }
   }
 
-  requestCryptosProvider() async {
+  faetchCryptos() async {
     var response = await _stocksService.getCryptos(
         selectedCurrency: currencySelected.value);
-    var result = json.decode(response.body);
+    var result = response.data;
     List<Cryptos> tempStockList = [];
 
     result.forEach((data) {
@@ -110,12 +98,12 @@ class CryptosController extends GetxController {
   clearSearch() async {
     searchTextController.value.text = "";
     searchText(searchTextController.value.text);
-    requestCryptosProvider();
+    faetchCryptos();
   }
 
   searchCryptos(String val) {
     searchTextController.value.text = val;
-    requestCryptosProvider();
+    faetchCryptos();
   }
 
   updateSearch(value) {
@@ -123,7 +111,7 @@ class CryptosController extends GetxController {
       debugPrint('Something changed in Title Text Field');
       isSearch(true);
       searchText(searchTextController.value.text);
-      requestCryptosProvider();
+      faetchCryptos();
     } else {
       isSearch(false);
     }

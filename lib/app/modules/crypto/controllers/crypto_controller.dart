@@ -45,8 +45,8 @@ class CryptoController extends GetxController {
     String api = "coins";
     var response = await _cryptoService.getCrypto(api, id);
 
-    Crypto mappedResponse = Crypto.fromJson(json.decode(response.body),
-        cryptosController.currencySelected.value.toString());
+    Crypto mappedResponse = Crypto.fromJson(
+        response.data, cryptosController.currencySelected.value.toString());
 
     return mappedResponse;
     // result
