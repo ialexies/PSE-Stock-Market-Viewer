@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:getx_stocks_pse/app/data/models/chart_data.dart';
 // import 'package:getx_stocks_pse/app/data/models/crypto_mode.dart';
 // import 'package:getx_stocks_pse/app/data/models/sales_data.dart';
 import 'package:getx_stocks_pse/app/data/models/crypto_history.dart';
@@ -9,7 +10,7 @@ import 'package:getx_stocks_pse/app/data/models/crypto_history.dart';
 import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
 import 'package:getx_stocks_pse/app/data/services/crypto_history_service.dart';
 // import 'package:getx_stocks_pse/app/data/services/stock_history_service.dart';
-// import 'package:getx_stocks_pse/app/data/services/stock_history_service.dart';
+// import 'package:getx_stocks_pse/app/data/services/crypto_history_service.dart';
 import 'package:getx_stocks_pse/app/data/services/crypto_service.dart';
 
 import 'package:getx_stocks_pse/app/modules/cryptos/controllers/cryptos_controller.dart';
@@ -18,6 +19,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class CryptoController extends GetxController {
   final CryptoService _cryptoService = CryptoService();
   List<CryptoHistory> stockHistoryList = <CryptoHistory>[].obs;
+  List<ChartData> cryptoHistoryList = <ChartData>[].obs;
+  var stockHist = [].obs;
   final CryptoHistoryService _stockHistoryService = CryptoHistoryService();
   final CryptosController cryptosController = Get.put(CryptosController());
   Rx<ZoomPanBehavior> zoomPanBehavior = ZoomPanBehavior().obs;
@@ -78,7 +81,7 @@ class CryptoController extends GetxController {
   Future<Crypto> getCryptoInfo(id) async {
     String api = "coins";
     var response = await _cryptoService.getCrypto(api, id);
-
+    List<CryptoHistory>? stockHistory = await getCryptoHistory(id);
     Crypto mappedResponse = Crypto.fromJson(
         response.data, cryptosController.currencySelected.value.toString());
 
@@ -90,9 +93,17 @@ class CryptoController extends GetxController {
     var stockHistory =
         await _stockHistoryService.getCryptoHistoryAll(tickerSymbol);
     var result = json.decode(stockHistory.body);
-    result["history"].forEach((data) {
-      stockHistoryList.add(CryptoHistory.fromJson(data));
+    // result["history"].forEach((data) {
+    // stockHist.clear();
+
+    // stockHist.value = result["prices"];
+
+    result["prices"].forEach((data) {
+      // stockHistoryList.add(CryptoHistory.fromJson(data));
+      // stockHist.add(data);
+      cryptoHistoryList.add(ChartData(
+          DateTime.fromMillisecondsSinceEpoch(data[0]).toString(), data[1]));
     });
-    // print('fdf');
+    print('fdf');
   }
 }

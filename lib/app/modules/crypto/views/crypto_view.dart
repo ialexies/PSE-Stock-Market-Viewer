@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 
 import 'package:get/get.dart';
 import 'package:getx_stocks_pse/app/core/utils/helpers.dart';
+import 'package:getx_stocks_pse/app/data/models/chart_data.dart';
 import 'package:getx_stocks_pse/app/data/models/crypto_history.dart';
 import 'package:getx_stocks_pse/app/data/models/crypto_model.dart';
 // import 'package:getx_stocks_pse/app/data/models/stock_history.dart';
@@ -37,64 +38,22 @@ class CryptoView extends GetView<CryptoController> {
                       children: [
                         SafeArea(
                             child: SfCartesianChart(
-                                // legend: Legend(
-                                //     isVisible: true,
-                                //     position: LegendPosition.bottom),
-                                zoomPanBehavior:
-                                    controller.zoomPanBehavior.value,
-                                // backgroundColor: Colors.amberAccent[50],
-                                primaryXAxis: DateTimeAxis(),
-                                enableAxisAnimation: true,
-                                indicators: <
-                                    TechnicalIndicators<CryptoHistory,
-                                        DateTime>>[
-                              RsiIndicator(
-                                dataSource: controller.stockHistoryList,
-                                xValueMapper: (CryptoHistory stockHistory, _) =>
-                                    stockHistory.tradingDate,
-                                closeValueMapper:
-                                    (CryptoHistory stockHistory, _) =>
-                                        stockHistory.close,
-                                highValueMapper:
-                                    (CryptoHistory stockHistory, _) =>
-                                        stockHistory.high,
-                                lowValueMapper:
-                                    (CryptoHistory stockHistory, _) =>
-                                        stockHistory.low,
-                              ),
-                              MacdIndicator(
-                                signalLineWidth: .3,
-                                macdLineWidth: .3,
-                                longPeriod: 200,
-                                shortPeriod: 7,
-                                macdLineColor: Colors.red,
-                                dataSource: controller.stockHistoryList,
-                                xValueMapper: (CryptoHistory stockHistory, _) =>
-                                    stockHistory.tradingDate,
-                                closeValueMapper:
-                                    (CryptoHistory stockHistory, _) =>
-                                        stockHistory.close,
-                              )
-                            ],
-                                series: <ChartSeries<CryptoHistory, DateTime>>[
-                              // Renders line chart
-                              LineSeries<CryptoHistory, DateTime>(
-                                  width: 100,
-                                  trendlines: <Trendline>[
-                                    Trendline(
-                                        width: .1,
-                                        isVisible: true,
-                                        name: "trend",
-                                        color: Colors.yellow,
-                                        opacity: .3)
-                                  ],
-                                  dataSource: controller.stockHistoryList,
-                                  xValueMapper:
-                                      (CryptoHistory stockHistory, _) =>
-                                          stockHistory.tradingDate,
-                                  yValueMapper:
-                                      (CryptoHistory stockHistory, _) =>
-                                          stockHistory.close)
+                                // Initialize category axis
+                                primaryXAxis: CategoryAxis(),
+                                series: <ChartSeries>[
+                              // Initialize line series
+                              LineSeries<ChartData, String>(
+                                  dataSource: controller.cryptoHistoryList,
+                                  //  [
+                                  //   // Bind data source
+                                  //   ChartData('Jan', 35),
+                                  //   ChartData('Feb', 28),
+                                  //   ChartData('Mar', 34),
+                                  //   ChartData('Apr', 32),
+                                  //   ChartData('May', 40)
+                                  // ],
+                                  xValueMapper: (ChartData data, _) => data.x,
+                                  yValueMapper: (ChartData data, _) => data.y)
                             ])),
                         Column(
                           children: [
