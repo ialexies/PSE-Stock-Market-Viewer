@@ -37,29 +37,33 @@ class CryptoView extends GetView<CryptoController> {
                   : ListView(
                       children: [
                         SafeArea(
-                            child: SfCartesianChart(
-                                title: ChartTitle(text: 'Histogram'),
-                                margin: EdgeInsets.all(10),
-                                tooltipBehavior: controller.tooltipBehavior,
-                                zoomPanBehavior:
-                                    controller.zoomPanBehavior.value,
-                                // Initialize category axis
-                                primaryXAxis: CategoryAxis(),
-                                series: <ChartSeries>[
-                              // Initialize line series
-                              LineSeries<ChartData, String>(
-                                dataSource: controller.cryptoHistoryList,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                                trendlines: <Trendline>[
-                                  Trendline(
-                                      type: TrendlineType.exponential,
-                                      opacity: .3,
-                                      width: .8,
-                                      color: Colors.amber.shade500)
-                                ],
-                              )
-                            ])),
+                          child: SfCartesianChart(
+                              title: ChartTitle(
+                                  text:
+                                      '${controller.cryptoDetails.value.name.toString()} Histogram'),
+                              margin: EdgeInsets.all(10),
+                              tooltipBehavior: controller.tooltipBehavior,
+                              zoomPanBehavior: controller.zoomPanBehavior.value,
+                              // Initialize category axis
+                              primaryXAxis: CategoryAxis(),
+                              series: <ChartSeries>[
+                                // Initialize line series
+                                LineSeries<ChartData, String>(
+                                  width: .8,
+                                  animationDuration: 4000,
+                                  dataSource: controller.cryptoHistoryList,
+                                  xValueMapper: (ChartData data, _) => data.x,
+                                  yValueMapper: (ChartData data, _) => data.y,
+                                  trendlines: <Trendline>[
+                                    Trendline(
+                                        type: TrendlineType.exponential,
+                                        opacity: .3,
+                                        width: .8,
+                                        color: Colors.amber.shade500)
+                                  ],
+                                ),
+                              ]),
+                        ),
                         Column(
                           children: [
                             Divider(),
