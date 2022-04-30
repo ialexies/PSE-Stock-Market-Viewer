@@ -91,12 +91,10 @@ class Repository {
     cryptoId = cryptoId.toLowerCase();
 
     var api = "/api/$_apiVersion/coins/$cryptoId";
-    // var dateFrom = '1392577232';
-    // var dateFrom = '1651340435206';
-    var dateFrom = DateTime.parse('2010-02-27').millisecondsSinceEpoch ~/ 1000;
-    print('dateFrom -- $dateFrom');
+    var dateFrom = DateTime.parse('2020-02-27').millisecondsSinceEpoch ~/ 1000;
+
     var dateTo = DateTime.now().millisecondsSinceEpoch;
-    print('dateTo -- $dateTo');
+
     var currency = "usd";
 
     try {

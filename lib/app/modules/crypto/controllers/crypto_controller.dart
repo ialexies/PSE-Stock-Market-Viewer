@@ -14,6 +14,7 @@ import 'package:getx_stocks_pse/app/data/services/crypto_history_service.dart';
 import 'package:getx_stocks_pse/app/data/services/crypto_service.dart';
 
 import 'package:getx_stocks_pse/app/modules/cryptos/controllers/cryptos_controller.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CryptoController extends GetxController {
@@ -30,16 +31,20 @@ class CryptoController extends GetxController {
   var stockStreamController = StreamController<Crypto>().obs;
   var cryptoDetails = Crypto().obs;
   var initDuration = 1.obs;
+  late TooltipBehavior tooltipBehavior;
 
   @override
   void onInit() async {
     // Crypto fetchCrypto = Crypto.fromJson(Get.parameters);
 
     stockStreamController.value.addStream(stockStream(Get.arguments));
-
+    tooltipBehavior = TooltipBehavior(enable: true);
     zoomPanBehavior.value = ZoomPanBehavior(
-        // Enables pinch zooming
-        enablePinching: true);
+      enablePinching: true,
+      enablePanning: true,
+      enableDoubleTapZooming: true,
+      enableSelectionZooming: true,
+    );
 
     super.onInit();
   }
@@ -77,8 +82,8 @@ class CryptoController extends GetxController {
         print(e);
         // isLoading.value = true;
       }
-      initDuration.value = 2000;
-      print('stream count crypto');
+      initDuration.value = 10000;
+
       update();
     }
   }
@@ -97,11 +102,12 @@ class CryptoController extends GetxController {
   getCryptoHistory(tickerSymbol) async {
     var response = await _stockHistoryService.getCryptoHistoryAll(tickerSymbol);
     var data = response.data;
-
+    final f = new DateFormat('MMM dd,yyyy');
     cryptoHistoryList.clear();
-    data["prices"].forEach((_) {
+    data["prices"].forEach((val) {
       cryptoHistoryList.add(ChartData(
-          DateTime.fromMillisecondsSinceEpoch(_[0]).toString(), _[1]));
+          f.format(DateTime.fromMillisecondsSinceEpoch(val[0])).toString(),
+          val[1]));
     });
   }
 }
