@@ -4,13 +4,19 @@ class MarketData {
   String? currentPrice;
   String? marketCap;
   String? high24;
+  String? high24Change;
+  String? high24ChangePercentage;
   String? low24;
+  String? totalVolume;
 
   MarketData({
     this.currentPrice,
     this.marketCap,
     this.high24,
+    this.high24Change,
+    this.high24ChangePercentage,
     this.low24,
+    this.totalVolume,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,8 +34,11 @@ class MarketData {
     final marketData = MarketData(
       currentPrice: map['current_price'][selectedCurrency].toString(),
       marketCap: map['market_cap'][selectedCurrency].toString(),
-      high24: map["high_24h"]["usd"].toString(),
-      low24: map["low_24h"]["usd"].toString(),
+      high24: map["high_24h"][selectedCurrency].toString(),
+      high24Change: map["price_change_24h"].toString(),
+      high24ChangePercentage: map["price_change_percentage_24h"].toString(),
+      low24: map["low_24h"][selectedCurrency].toString(),
+      totalVolume: map["total_volume"][selectedCurrency].toString(),
     );
     return marketData;
   }

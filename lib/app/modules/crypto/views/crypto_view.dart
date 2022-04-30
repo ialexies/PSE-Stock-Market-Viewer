@@ -123,10 +123,21 @@ class CryptoView extends GetView<CryptoController> {
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.currentPrice.toString())} ',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.currentPrice.toString())} ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Helpers().percent24ChangeChecker(
+                                          controller
+                                              .cryptoDetails
+                                              .value
+                                              .marketData!
+                                              .high24ChangePercentage,
+                                          35.sp)
+                                    ],
                                   ),
                                 ],
                               ),
@@ -136,30 +147,15 @@ class CryptoView extends GetView<CryptoController> {
                                   Row(
                                     children: [
                                       Text(
-                                        'Market Cap:  '.toUpperCase(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 10),
-                                      ),
-                                      Text(
-                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.marketCap)}',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 10),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
                                         'High 24:  '.toUpperCase(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 10),
+                                            fontSize: 30.sp),
                                       ),
                                       Text(
-                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.high24)}',
+                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.high24)}  ',
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: 30.sp),
                                       ),
                                     ],
                                   ),
@@ -169,12 +165,42 @@ class CryptoView extends GetView<CryptoController> {
                                         'Low 24:  '.toUpperCase(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 10),
+                                            fontSize: 30.sp),
                                       ),
                                       Text(
-                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.low24.toString())}',
+                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.low24.toString())}  ',
                                         textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 10),
+                                        style: TextStyle(fontSize: 30.sp),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Volume:  '.toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30.sp),
+                                      ),
+                                      Text(
+                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.totalVolume.toString())}  ',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 30.sp),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Market Cap:  '.toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30.sp),
+                                      ),
+                                      Text(
+                                        '${Helpers().selectedCurrency()} ${Helpers().moneyFormatter(controller.cryptoDetails.value.marketData!.marketCap)}',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 30.sp),
                                       ),
                                     ],
                                   ),

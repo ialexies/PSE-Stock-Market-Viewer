@@ -159,13 +159,13 @@ class CryptosView extends GetView<CryptosController> {
                     child: ListView.builder(
                         itemCount: controller.cryptoListFiltered.length,
                         itemBuilder: (context, index) {
+                          var filteredData = controller.cryptoListFiltered;
+
                           return Container(
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: ListTile(
                               onTap: () {
-                                var stockData = controller
-                                    .cryptoListFiltered[index]
-                                    .toJson();
+                                var stockData = filteredData[index].toJson();
                                 Get.toNamed(Routes.CRYPTO,
                                     arguments: stockData["id"]
                                         .toString()
@@ -174,7 +174,7 @@ class CryptosView extends GetView<CryptosController> {
                               leading: Padding(
                                 padding: const EdgeInsets.all(.0),
                                 child: Image.network(
-                                    '${controller.cryptoListFiltered[index].img}',
+                                    '${filteredData[index].img}',
                                     width: 130.w),
                               ),
                               title: Column(
@@ -184,7 +184,7 @@ class CryptosView extends GetView<CryptosController> {
                                     TextSpan(children: [
                                       TextSpan(
                                         text:
-                                            '${controller.cryptoListFiltered[index].tickerSymbol}'
+                                            '${filteredData[index].tickerSymbol}'
                                                 .toUpperCase(),
                                         style: TextStyle(
                                           color: Colors.grey[800],
@@ -199,18 +199,18 @@ class CryptosView extends GetView<CryptosController> {
                                             fontSize: 40.sp,
                                           ),
                                           text:
-                                              '-${controller.cryptoListFiltered[index].companyName}'
+                                              '-${filteredData[index].companyName}'
                                                   .toUpperCase()),
                                     ]),
                                     minFontSize: 4,
                                     style: TextStyle(fontSize: 16),
                                   ),
                                   Text(
-                                    'Market Cap:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.cryptoListFiltered[index].marketCap.toString()))}',
+                                    'Market Cap:  ${Helpers().moneyFormatter(filteredData[index].marketCap)}',
                                     style: TextStyles().myStyleSubtitle(),
                                   ),
                                   Text(
-                                    'Volume:  ${intl.NumberFormat.decimalPattern().format(double.parse(controller.cryptoListFiltered[index].totalVolume.toString()))}',
+                                    'Volume:  ${Helpers().moneyFormatter(filteredData[index].totalVolume)}',
                                     style: TextStyles().myStyleSubtitle(),
                                   ),
                                 ],
@@ -237,7 +237,7 @@ class CryptosView extends GetView<CryptosController> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '${Helpers().moneyFormatter(controller.cryptoListFiltered[index].price.toString())}',
+                                                '${Helpers().moneyFormatter(filteredData[index].price.toString())}',
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 30.sp,
@@ -255,20 +255,13 @@ class CryptosView extends GetView<CryptosController> {
                                               ),
                                             ],
                                           ),
-                                          Text(
-                                              '${controller.cryptoListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 26.sp,
-                                                color: controller
-                                                            .cryptoList
-                                                            .value[index]
-                                                            .priceChangePercentage24h!
-                                                            .toDouble() >=
-                                                        1
-                                                    ? Colors.blue
-                                                    : Colors.red,
-                                              )),
+
+                                          Helpers().percent24ChangeChecker(
+                                              controller
+                                                  .cryptoListFiltered[index]
+                                                  .priceChangePercentage24h,
+                                              25.sp),
+
                                           // RichText(
                                           //     text: TextSpan(
                                           //   children: [
@@ -279,9 +272,9 @@ class CryptosView extends GetView<CryptosController> {
                                           //         color: Colors.black,
                                           //       ),
                                           //       text:
-                                          //           // '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
-                                          //           '${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].price)}',
-                                          //       // '${controller.currencySelectedSymbol.value}${double.parse(controller.cryptoListFiltered[index].price?.toStringAsFixed() ?? "0")}',
+                                          //           // '${controller.currencySelectedSymbol.value}${decimalFormatter.format(filteredData[index].price)}',
+                                          //           '${controller.currencySelectedSymbol.value}${decimalFormatter.format(filteredData[index].price)}',
+                                          //       // '${controller.currencySelectedSymbol.value}${double.parse(filteredData[index].price?.toStringAsFixed() ?? "0")}',
                                           //     ),
                                           //     TextSpan(text: ' '),
                                           //     TextSpan(
@@ -298,11 +291,11 @@ class CryptosView extends GetView<CryptosController> {
                                           //               : Colors.red,
                                           //         ),
                                           //         text:
-                                          //             '${controller.cryptoListFiltered[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
+                                          //             '${filteredData[index].priceChangePercentage24h?.toStringAsFixed(2)}%'),
                                           //   ],
                                           // )),
                                           Text(
-                                            'High: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].high24h)}  ',
+                                            'High: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(filteredData[index].high24h)}  ',
                                             style: TextStyles()
                                                 .myStyleSubtitle()
                                                 .copyWith(
@@ -310,7 +303,7 @@ class CryptosView extends GetView<CryptosController> {
                                                 ),
                                           ),
                                           Text(
-                                            'Low: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(controller.cryptoListFiltered[index].low24h)} ',
+                                            'Low: ${controller.currencySelectedSymbol.value}${decimalFormatter.format(filteredData[index].low24h)} ',
                                             style: TextStyles()
                                                 .myStyleSubtitle()
                                                 .copyWith(

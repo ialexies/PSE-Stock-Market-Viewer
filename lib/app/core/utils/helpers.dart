@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 import 'package:getx_stocks_pse/app/modules/cryptos/controllers/cryptos_controller.dart';
@@ -21,5 +23,16 @@ class Helpers {
 
   urLauncher(Uri url) async {
     if (!await launchUrl(url)) throw 'Could not launch $url';
+  }
+
+  Text percent24ChangeChecker(numChange, double fSize) {
+    return Text('${double.parse(numChange.toString()).toStringAsFixed(2)}%',
+        style: TextStyle(
+          fontSize: fSize,
+          fontWeight: FontWeight.w500,
+          color: double.parse(numChange.toString()) >= 1
+              ? Colors.blue
+              : Colors.red,
+        ));
   }
 }
