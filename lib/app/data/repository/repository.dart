@@ -16,6 +16,7 @@ class ApiTimeoutFailure implements ApiFailure {
 class Repository {
   final String _baseUrl = "api.coingecko.com";
   final String _apiVersion = "v3";
+  final String _apiProtocol = 'https://';
 
   httpGetCryptos({required String api, String selectedCurrency = "USD"}) async {
     Map<String, String> qParams = {
@@ -83,12 +84,39 @@ class Repository {
     // return response;
   }
 
-  httpGetStockHistory({required String tickerSymbol}) async {
+  httpGetStockHistory({required String cryptoId}) async {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String dateFormatted = formatter.format(now);
-    return await http.get(Uri.parse(
-        "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=1392577232&to=1422577232"));
+    cryptoId = cryptoId.toLowerCase();
+
+    var api = "/api/$_apiVersion/coins/$cryptoId";
+    // var dateFrom = '1392577232';
+    // var dateFrom = '1651340435206';
+    var dateFrom = DateTime.parse('2010-02-27').millisecondsSinceEpoch ~/ 1000;
+    print('dateFrom -- $dateFrom');
+    var dateTo = DateTime.now().millisecondsSinceEpoch;
+    print('dateTo -- $dateTo');
+    var currency = "usd";
+
+    try {
+      var response = await Dio().get(
+          "https://$_baseUrl/api/$_apiVersion/coins/$cryptoId/market_chart/range?vs_currency=$currency&from=$dateFrom&to=$dateTo");
+
+      return response;
+    } on DioError catch (e) {
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+        case DioErrorType.sendTimeout:
+        case DioErrorType.receiveTimeout:
+          throw ApiTimeoutFailure();
+        case DioErrorType.response:
+        case DioErrorType.cancel:
+        case DioErrorType.other:
+          rethrow;
+      }
+    }
+
     // return await http.get(Uri.parse(
     //     "https://pselookup.vrymel.com/api/stocks/${tickerSymbol}/history/2021-01-19/${dateFormatted}"));
   }

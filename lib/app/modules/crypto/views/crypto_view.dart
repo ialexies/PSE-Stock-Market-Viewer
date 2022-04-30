@@ -44,14 +44,6 @@ class CryptoView extends GetView<CryptoController> {
                               // Initialize line series
                               LineSeries<ChartData, String>(
                                   dataSource: controller.cryptoHistoryList,
-                                  //  [
-                                  //   // Bind data source
-                                  //   ChartData('Jan', 35),
-                                  //   ChartData('Feb', 28),
-                                  //   ChartData('Mar', 34),
-                                  //   ChartData('Apr', 32),
-                                  //   ChartData('May', 40)
-                                  // ],
                                   xValueMapper: (ChartData data, _) => data.x,
                                   yValueMapper: (ChartData data, _) => data.y)
                             ])),

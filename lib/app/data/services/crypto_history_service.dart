@@ -5,6 +5,6 @@ class CryptoHistoryService {
 
   getCryptoHistoryAll(tickerSymbol) async {
     // return await repository.httpGet(api: "/stocks/${tickerSymbol}");
-    return await repository.httpGetStockHistory(tickerSymbol: tickerSymbol);
+    return await repository.httpGetStockHistory(cryptoId: tickerSymbol);
   }
 }
