@@ -28,6 +28,7 @@ class CryptosController extends GetxController {
   var currencySelectedSymbol = "\$".obs;
   var selectedCryptoImage = "".obs;
   var searchTextController = TextEditingController().obs;
+  var initDuration = 1.obs;
 
   final CryptosService _stocksService = CryptosService();
 
@@ -50,13 +51,16 @@ class CryptosController extends GetxController {
   @override
   Stream<Cryptos> stockStream() async* {
     while (isStreamOn.value == true) {
-      await Future.delayed(Duration(milliseconds: 2000));
+      await Future.delayed(Duration(milliseconds: initDuration.value));
       try {
         // searchFilter("z");
         faetchCryptos();
       } catch (e) {
         // isLoading.value = true;
       }
+      initDuration.value = 5000;
+      update();
+      // print('stream count');
     }
   }
 

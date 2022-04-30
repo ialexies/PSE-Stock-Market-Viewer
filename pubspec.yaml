@@ -12,12 +12,14 @@ dependencies:
   dio: ^4.0.6
   flutter:
     sdk: flutter
+  flutter_html: ^2.2.1
   get: 4.3.0
   get_cli: ^1.7.1
   google_fonts: ^2.3.2
   http: ^0.13.3
   intl: ^0.17.0
   syncfusion_flutter_charts: ^19.2.62
+  url_launcher: ^6.1.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0

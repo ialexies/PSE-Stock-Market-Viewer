@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -18,16 +19,20 @@ class CryptoController extends GetxController {
   final CryptoService _cryptoService = CryptoService();
   List<CryptoHistory> stockHistoryList = <CryptoHistory>[].obs;
   final CryptoHistoryService _stockHistoryService = CryptoHistoryService();
-
   final CryptosController cryptosController = Get.put(CryptosController());
-
   Rx<ZoomPanBehavior> zoomPanBehavior = ZoomPanBehavior().obs;
   final count = 0.obs;
+  var isStreamOn = true.obs;
+  var isLoading = true.obs;
+  var stockStreamController = StreamController<Crypto>().obs;
+  var cryptoDetails = Crypto().obs;
+  var initDuration = 1.obs;
+
   @override
-  void onInit() {
+  void onInit() async {
     // Crypto fetchCrypto = Crypto.fromJson(Get.parameters);
 
-    // getCryptoInfo(fetchCrypto.name);
+    stockStreamController.value.addStream(stockStream(Get.arguments));
 
     zoomPanBehavior.value = ZoomPanBehavior(
         // Enables pinch zooming
@@ -39,6 +44,35 @@ class CryptoController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+  }
+
+  @override
+  void onClose() {
+    StreamController().close();
+    initDuration.value = 1;
+    super.onClose();
+  }
+
+  Stream<Crypto> stockStream(id) async* {
+    while (isStreamOn.value == true) {
+      await Future.delayed(Duration(milliseconds: initDuration.value));
+      try {
+        var response = await getCryptoInfo(id);
+
+        cryptoDetails.value = response;
+        // print('cryptodetails has info ');
+
+        isLoading.value = false;
+        update();
+      } catch (e) {
+        isLoading.value = false;
+        print(e);
+        // isLoading.value = true;
+      }
+      initDuration.value = 10000;
+      print('stream count crypto');
+      update();
+    }
   }
 
   Future<Crypto> getCryptoInfo(id) async {

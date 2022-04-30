@@ -163,8 +163,9 @@ class CryptosView extends GetView<CryptosController> {
                             padding: EdgeInsets.symmetric(vertical: 2),
                             child: ListTile(
                               onTap: () {
-                                var stockData =
-                                    controller.cryptoList.value[index].toJson();
+                                var stockData = controller
+                                    .cryptoListFiltered[index]
+                                    .toJson();
                                 Get.toNamed(Routes.CRYPTO,
                                     arguments: stockData["id"]
                                         .toString()
