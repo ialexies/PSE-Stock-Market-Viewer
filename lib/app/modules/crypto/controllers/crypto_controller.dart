@@ -105,9 +105,16 @@ class CryptoController extends GetxController {
     final f = new DateFormat('MMM dd,yyyy');
     cryptoHistoryList.clear();
     data["prices"].forEach((val) {
-      cryptoHistoryList.add(ChartData(
+      var i = data["prices"].indexOf(val);
+
+      cryptoHistoryList.add(
+        ChartData(
           f.format(DateTime.fromMillisecondsSinceEpoch(val[0])).toString(),
-          val[1]));
+          val[1],
+          data["market_caps"][i][1],
+          data["total_volumes"][i][1],
+        ),
+      );
     });
   }
 }
