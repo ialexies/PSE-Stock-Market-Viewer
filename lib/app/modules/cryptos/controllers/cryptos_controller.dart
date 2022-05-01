@@ -29,6 +29,7 @@ class CryptosController extends GetxController {
   var selectedCryptoImage = "".obs;
   var searchTextController = TextEditingController().obs;
   var initDuration = 1.obs;
+  var shouldPop = false.obs;
 
   final CryptosService _stocksService = CryptosService();
 
