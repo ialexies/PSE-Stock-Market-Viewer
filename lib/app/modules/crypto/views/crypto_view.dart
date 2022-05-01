@@ -38,6 +38,7 @@ class CryptoView extends GetView<CryptoController> {
                       children: [
                         SafeArea(
                           child: SfCartesianChart(
+                              enableAxisAnimation: true,
                               title: ChartTitle(
                                   text:
                                       '${controller.cryptoDetails.value.name.toString()} Histogram'),
@@ -45,7 +46,13 @@ class CryptoView extends GetView<CryptoController> {
                               tooltipBehavior: controller.tooltipBehavior,
                               zoomPanBehavior: controller.zoomPanBehavior.value,
                               // Initialize category axis
-                              primaryXAxis: CategoryAxis(),
+
+                              primaryXAxis: CategoryAxis(
+                                  labelRotation: 90,
+                                  labelStyle: TextStyle(fontSize: 8)),
+                              primaryYAxis: CategoryAxis(
+                                  labelRotation: 45,
+                                  labelStyle: TextStyle(fontSize: 8)),
                               series: <ChartSeries>[
                                 // Initialize line series
                                 LineSeries<ChartData, String>(

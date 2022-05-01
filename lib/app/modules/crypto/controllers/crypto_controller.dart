@@ -102,7 +102,7 @@ class CryptoController extends GetxController {
   getCryptoHistory(tickerSymbol) async {
     var response = await _stockHistoryService.getCryptoHistoryAll(tickerSymbol);
     var data = response.data;
-    final f = new DateFormat('MMM dd,yyyy');
+    final f = new DateFormat('MMM dd,yy');
     cryptoHistoryList.clear();
     data["prices"].forEach((val) {
       var i = data["prices"].indexOf(val);
