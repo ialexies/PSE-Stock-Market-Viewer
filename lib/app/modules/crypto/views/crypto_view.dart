@@ -132,7 +132,7 @@ class CryptoView extends GetView<CryptoController> {
                                                         style: TextStyle(
                                                             fontSize: 24.sp)),
                                                     Text(
-                                                        '${controller.cryptoDetails.value.sentimentVotesUpPercentage}',
+                                                        '${controller.cryptoDetails.value.sentimentVotesUpPercentage}%',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
@@ -147,7 +147,7 @@ class CryptoView extends GetView<CryptoController> {
                                                         style: TextStyle(
                                                             fontSize: 24.sp)),
                                                     Text(
-                                                        '${controller.cryptoDetails.value.sentimentVotesDownPercentage}',
+                                                        '${controller.cryptoDetails.value.sentimentVotesDownPercentage}%',
                                                         style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
