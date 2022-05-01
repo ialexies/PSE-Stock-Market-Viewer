@@ -37,41 +37,131 @@ class CryptoView extends GetView<CryptoController> {
                   : ListView(
                       children: [
                         SafeArea(
-                          child: SfCartesianChart(
-                              enableAxisAnimation: true,
-                              title: ChartTitle(
-                                  text:
-                                      '${controller.cryptoDetails.value.name.toString()} Histogram'),
-                              margin: EdgeInsets.all(10),
-                              tooltipBehavior: controller.tooltipBehavior,
-                              zoomPanBehavior: controller.zoomPanBehavior.value,
-                              // Initialize category axis
+                          child: Stack(
+                            children: [
+                              SfCartesianChart(
+                                  enableAxisAnimation: true,
+                                  title: ChartTitle(
+                                      text:
+                                          '${controller.cryptoDetails.value.name.toString()} Histogram'),
+                                  margin: EdgeInsets.all(15.h),
+                                  tooltipBehavior: controller.tooltipBehavior,
+                                  zoomPanBehavior:
+                                      controller.zoomPanBehavior.value,
+                                  // Initialize category axis
 
-                              primaryXAxis: CategoryAxis(
-                                  labelRotation: 90,
-                                  labelStyle: TextStyle(fontSize: 8)),
-                              primaryYAxis: CategoryAxis(
-                                  labelRotation: 45,
-                                  labelStyle: TextStyle(fontSize: 8)),
-                              series: <ChartSeries>[
-                                // Initialize line series
-                                LineSeries<ChartData, String>(
-                                  width: .8,
-                                  animationDuration: 4000,
-                                  dataSource: controller.cryptoHistoryList,
-                                  xValueMapper: (ChartData data, _) =>
-                                      data.cryptoDate,
-                                  yValueMapper: (ChartData data, _) =>
-                                      data.cryptoPrice,
-                                  trendlines: <Trendline>[
-                                    Trendline(
-                                        type: TrendlineType.exponential,
-                                        opacity: .3,
-                                        width: .8,
-                                        color: Colors.amber.shade500)
-                                  ],
-                                ),
-                              ]),
+                                  primaryXAxis: CategoryAxis(
+                                      labelRotation: 90,
+                                      labelStyle: TextStyle(fontSize: 25.sp)),
+                                  primaryYAxis: CategoryAxis(
+                                      labelRotation: 45,
+                                      labelStyle: TextStyle(fontSize: 25.sp)),
+                                  series: <ChartSeries>[
+                                    // Initialize line series
+                                    LineSeries<ChartData, String>(
+                                      width: .8,
+                                      animationDuration: 4000,
+                                      dataSource: controller.cryptoHistoryList,
+                                      xValueMapper: (ChartData data, _) =>
+                                          data.cryptoDate,
+                                      yValueMapper: (ChartData data, _) =>
+                                          data.cryptoPrice,
+                                      trendlines: <Trendline>[
+                                        Trendline(
+                                            type: TrendlineType.exponential,
+                                            opacity: .3,
+                                            width: .8,
+                                            color: Colors.amber.shade500)
+                                      ],
+                                    ),
+                                  ]),
+                              Positioned(
+                                  top: 150.h,
+                                  left: 120.h,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      double.parse(controller
+                                                  .cryptoDetails
+                                                  .value
+                                                  .sentimentVotesUpPercentage
+                                                  .toString()) >
+                                              double.parse(controller
+                                                  .cryptoDetails
+                                                  .value
+                                                  .sentimentVotesDownPercentage
+                                                  .toString())
+                                          ? Icon(
+                                              Icons.arrow_upward_rounded,
+                                              color: Colors.green[800],
+                                              size: 100.sp,
+                                            )
+                                          : Icon(
+                                              Icons.arrow_downward_rounded,
+                                              color: Colors.red,
+                                              size: 100.sp,
+                                            ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'SENTIMENTS',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 30.sp),
+                                              ),
+                                            ],
+                                          ),
+                                          double.parse(controller
+                                                      .cryptoDetails
+                                                      .value
+                                                      .sentimentVotesUpPercentage
+                                                      .toString()) >
+                                                  double.parse(controller
+                                                      .cryptoDetails
+                                                      .value
+                                                      .sentimentVotesDownPercentage
+                                                      .toString())
+                                              ? Row(
+                                                  children: [
+                                                    Text('UP TREND: ',
+                                                        style: TextStyle(
+                                                            fontSize: 24.sp)),
+                                                    Text(
+                                                        '${controller.cryptoDetails.value.sentimentVotesUpPercentage}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 30.sp,
+                                                            color: Colors
+                                                                .green[800])),
+                                                  ],
+                                                )
+                                              : Row(
+                                                  children: [
+                                                    Text('DOWN TREND: ',
+                                                        style: TextStyle(
+                                                            fontSize: 24.sp)),
+                                                    Text(
+                                                        '${controller.cryptoDetails.value.sentimentVotesDownPercentage}',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 30.sp,
+                                                            color: Colors
+                                                                .red[800])),
+                                                  ],
+                                                ),
+                                        ],
+                                      ),
+                                    ],
+                                  ))
+                            ],
+                          ),
                         ),
                         Column(
                           children: [

@@ -11,6 +11,8 @@ class Crypto {
   MarketData? marketData;
   String? hasingAlgorithm;
   String? genesisDate;
+  String? sentimentVotesUpPercentage;
+  String? sentimentVotesDownPercentage;
   CryptoImage? img;
   String? last_updated;
 
@@ -22,6 +24,8 @@ class Crypto {
     this.marketData,
     this.hasingAlgorithm,
     this.genesisDate,
+    this.sentimentVotesUpPercentage,
+    this.sentimentVotesDownPercentage,
     this.img,
     last_updated,
   });
@@ -35,6 +39,10 @@ class Crypto {
       marketData: MarketData.fromMap(jsonData['market_data'], SelectedCurrency),
       hasingAlgorithm: jsonData['hasing_algorithm'],
       genesisDate: jsonData['genesis_date'],
+      sentimentVotesUpPercentage:
+          jsonData['sentiment_votes_up_percentage'].toString(),
+      sentimentVotesDownPercentage:
+          jsonData['sentiment_votes_down_percentage'].toString(),
       img: CryptoImage.fromMap(jsonData['image']),
       last_updated: jsonData['last_updated'],
     );
