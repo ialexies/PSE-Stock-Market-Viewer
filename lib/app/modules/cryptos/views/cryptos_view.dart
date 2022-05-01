@@ -22,7 +22,7 @@ class CryptosView extends GetView<CryptosController> {
       },
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(460.h),
+          preferredSize: Size.fromHeight(447.h),
           child: Column(
             children: [
               AppBar(
@@ -97,6 +97,13 @@ class CryptosView extends GetView<CryptosController> {
               ),
               Container(
                 decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(71, 0, 0, 0),
+                      blurRadius: 8,
+                      offset: Offset(0, 8), // Shadow position
+                    ),
+                  ],
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -113,6 +120,7 @@ class CryptosView extends GetView<CryptosController> {
                     Container(
                       height: 150.h,
                       child: TextField(
+                        autofocus: false,
                         controller: controller.searchTextController.value,
                         onChanged: (value) => controller.updateSearch(value),
                         onSubmitted: (value) => controller.searchCryptos(value),
@@ -166,7 +174,7 @@ class CryptosView extends GetView<CryptosController> {
                             var filteredData = controller.cryptoListFiltered;
 
                             return Container(
-                              padding: EdgeInsets.symmetric(vertical: 2),
+                              padding: EdgeInsets.only(top: 10.h),
                               child: ListTile(
                                 onTap: () {
                                   var stockData = filteredData[index].toJson();
@@ -223,6 +231,7 @@ class CryptosView extends GetView<CryptosController> {
                                   children: [
                                     Container(
                                       // height: double.infinity,
+                                      padding: EdgeInsets.only(top: 25.h),
                                       // height: 300,
                                       width: 260.w,
                                       decoration: BoxDecoration(
