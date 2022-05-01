@@ -52,8 +52,10 @@ class CryptoView extends GetView<CryptoController> {
                                   width: .8,
                                   animationDuration: 4000,
                                   dataSource: controller.cryptoHistoryList,
-                                  xValueMapper: (ChartData data, _) => data.x,
-                                  yValueMapper: (ChartData data, _) => data.y,
+                                  xValueMapper: (ChartData data, _) =>
+                                      data.cryptoDate,
+                                  yValueMapper: (ChartData data, _) =>
+                                      data.cryptoPrice,
                                   trendlines: <Trendline>[
                                     Trendline(
                                         type: TrendlineType.exponential,

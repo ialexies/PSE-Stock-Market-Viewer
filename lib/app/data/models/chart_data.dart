@@ -1,5 +1,5 @@
 class ChartData {
-  ChartData(this.x, this.y);
-  final String x;
-  final double? y;
+  ChartData(this.cryptoDate, this.cryptoPrice);
+  final String cryptoDate;
+  final double? cryptoPrice;
 }

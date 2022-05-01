@@ -1,13 +1,20 @@
 class ConstantData {
   static const List<String> currencies = [
-    'usd',
     'btc',
-    'bnb',
     'eth',
+    'bnb',
+    'xrp',
+    'ltc',
+    'usd',
     'gbp',
     'php',
     'sgd',
+    'aud',
+    'eur',
+    'jpy',
+    'rub',
 
+    // 'ada',
     // 'aed',
     // 'ars',
     // 'aud',
@@ -38,7 +45,7 @@ class ConstantData {
     // 'krw',
     // 'kwd',
     // 'lkr',
-    // 'ltc',
+
     // 'mmk',
     // 'mxn',
     // 'myr',
