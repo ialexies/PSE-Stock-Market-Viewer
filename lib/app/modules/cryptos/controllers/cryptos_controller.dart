@@ -135,6 +135,7 @@ class CryptosController extends GetxController {
       currencySelectedSymbol.value = "";
     }
     currencySelected.value = val;
+    faetchCryptos();
     update();
   }
 
